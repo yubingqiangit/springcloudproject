@@ -1,0 +1,38 @@
+server:
+  # 服务端口号
+  port: 7200
+spring:
+  application:
+    # 服务名称 - 服务之间使用名称进行通讯
+    name: service-zuul
+  datasource:  #数据库
+    url: jdbc:mysql://192.168.102.115:3306/testgroup?useUnicode=true&characterEncoding=UTF-8
+    username: testgroup
+    password: Sgcc_1234
+    driver-class-name: com.mysql.jdbc.Driver
+
+
+eureka:
+  client:
+    service-url:
+      # 填写注册中心服务器地址
+      defaultZone:  http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
+
+#请求地址：http://localhost:7200/service-a/get/openfeign/1?token=2222
+zuul:
+  routes:
+    # 设置服务a 路径名称 随便起
+    service-a:   #服务路由配置
+      path: /service-a/**
+      serviceId: CLOUD-ORDER-SERVICE   #eureka注册服务名称
+    service-b:
+      path: /service-b/**
+      # 这里写a服务的注册名字
+      serviceId: CLOUD-PAYMENT-SERVICE
+    #ignore-local-service:  忽略服务映射
+  #prefix: /zuul #路由前缀
+
+logging:
+  level:
+    com:
+      yu: debug

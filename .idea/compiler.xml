@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="cloud-common" />
+        <module name="cloud-gateway" />
+        <module name="cloud-zuul" />
+        <module name="consul-order8080" />
+        <module name="consul-payment7003" />
+        <module name="consul-payment7004" />
+        <module name="eureka7001" />
+        <module name="eureka7002" />
+        <module name="hystrix-dashboard" />
+        <module name="order80" />
+        <module name="payment8001" />
+        <module name="payment8002" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

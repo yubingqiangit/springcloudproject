@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace= "com.yu.dao.ModelMapper" >
+    <resultMap id ="ModelStakeRelMap" type="com.yu.entity.ModelStakeRel">
+        <result property="id" column="id"/>
+        <result column="model_id" property="modelId"/>
+        <result column="stake_no" property="stakeNo"/>
+        <result column="charge_port" property="chargePort"/>
+        <result column="rel_time" property="relTime"/>
+        <result column="server_type" property="serverType"/>
+    </resultMap>
+
+    <select id = "getModelStakeRelById"  resultMap="ModelStakeRelMap">
+       select * from pc_model_stake_rel where id = #{id}
+    </select>
+
+</mapper>

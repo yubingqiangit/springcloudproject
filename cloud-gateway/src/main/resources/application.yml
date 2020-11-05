@@ -1,0 +1,30 @@
+server:
+  port: 7300
+spring:
+  application:
+    name: cloud-gateway
+  datasource:  #数据库
+    url: jdbc:mysql://192.168.102.115:3306/testgroup?useUnicode=true&characterEncoding=UTF-8
+    username: testgroup
+    password: Sgcc_1234
+    driver-class-name: com.mysql.jdbc.Driver
+
+
+
+cloud:
+  gateway:
+    routes:
+      - id: eureka-client
+        uri: lb://CLOUD-ORDER-SERVICE   #eureka注册服务名称
+        predicates:
+          - Path=/eureka-client/**
+  loadbalancer:
+    ribbon:
+      enabled: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
+  instance:
+    prefer-ip-address: true
