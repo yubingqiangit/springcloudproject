@@ -1,6 +1,16 @@
 server:
   port: 7300
 spring:
+  cloud:
+    gateway:
+      routes:
+        - id: eureka-client
+          uri: http://localhost:80  #eureka注册服务ip
+          predicates:               #路径相匹配的进行路由
+            - Path=/get/openfeign/**
+    loadbalancer:
+      ribbon:
+        enabled: false
   application:
     name: cloud-gateway
   datasource:  #数据库
@@ -11,16 +21,7 @@ spring:
 
 
 
-cloud:
-  gateway:
-    routes:
-      - id: eureka-client
-        uri: lb://CLOUD-ORDER-SERVICE   #eureka注册服务名称
-        predicates:
-          - Path=/eureka-client/**
-  loadbalancer:
-    ribbon:
-      enabled: false
+
 
 eureka:
   client:

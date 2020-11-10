@@ -6,9 +6,9 @@ spring:
     # 服务名称 - 服务之间使用名称进行通讯
     name: service-zuul
   datasource:  #数据库
-    url: jdbc:mysql://192.168.102.115:3306/testgroup?useUnicode=true&characterEncoding=UTF-8
-    username: testgroup
-    password: Sgcc_1234
+    url: jdbc:mysql://localhost:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
 
 
