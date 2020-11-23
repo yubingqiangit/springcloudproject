@@ -1,6 +1,12 @@
 server:
   port: 7300
 spring:
+  security:
+    basic:
+      enabled: true               # 开启基于HTTP basic的认证
+    user:
+      name: admin                  # 配置登录的账号是admin
+      password: admin       # 配置登录的密码是admin
   cloud:
     gateway:
       routes:
@@ -25,13 +31,10 @@ spring:
     password: Sgcc_1234
     driver-class-name: com.mysql.jdbc.Driver
 
-
-
-
-
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
+      #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
+      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
   instance:
     prefer-ip-address: true

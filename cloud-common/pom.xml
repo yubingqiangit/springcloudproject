@@ -38,7 +38,11 @@
             <artifactId>jedis</artifactId>
             <version>3.3.0</version>
         </dependency>
-
+        <!--用户认证-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <!-- 整合hystrix -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

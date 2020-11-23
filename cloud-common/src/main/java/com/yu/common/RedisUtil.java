@@ -33,8 +33,8 @@ public class RedisUtil {
 
     public static void main(String[] args) {
         RedisUtil redisUtil = new RedisUtil();
-        redisUtil.set("hhh", "hhhhh");
-        System.out.println(redisUtil.get("hhh"));
+
+        System.out.println(redisUtil.get("haha"));
 
     }
 
