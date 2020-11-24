@@ -31,6 +31,15 @@ public class OrderConsumeController {
     @Resource
     private FeignService feignService;
 
+
+    @GetMapping("/test/test/{id}")
+    public String test(@PathVariable("id") Integer id){
+        if (id == 1)
+            return new CommonResult<ModelStakeRel>(-1, "error.").toString();
+        else
+            return new CommonResult<ModelStakeRel>().toString();
+    }
+
     @GetMapping("/order/object/{id}")
     public String getForObject(@PathVariable("id") Integer id) {
         CommonResult commonResult = restTemplate.
@@ -84,7 +93,7 @@ public class OrderConsumeController {
      * @return
      */
     @HystrixCommand(fallbackMethod = "getDefultModel")
-    @GetMapping("get/openfign/hystrix/{id}")
+    @GetMapping("get/hystrix/{id}")
     public CommonResult<ModelStakeRel> getForHystrix(@PathVariable("id") Integer id) {
         return feignService.getForMybatis(id);
     }

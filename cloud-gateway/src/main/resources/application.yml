@@ -1,12 +1,12 @@
 server:
   port: 7300
 spring:
-  security:
-    basic:
-      enabled: true               # 开启基于HTTP basic的认证
-    user:
-      name: admin                  # 配置登录的账号是admin
-      password: admin       # 配置登录的密码是admin
+#  security:
+#    basic:
+#      enabled: true               # 开启基于HTTP basic的认证
+#    user:
+#      name: admin                  # 配置登录的账号是admin
+#      password: admin       # 配置登录的密码是admin
   cloud:
     gateway:
       routes:
@@ -16,10 +16,13 @@ spring:
             - Path=/get/openfeign/**
         #实现payment8001,8002服务动态路由负载均衡   请求地址：http://localhost:7300/mybatis/model/4
         - id: payment_routes #  payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名
-          #uri: http://localhost:8001         #匹配后提供服务的路由地址
           uri: lb://CLOUD-PAYMENT-SERVICE   #匹配后提供服务的路由地址，lb后跟提供服务的微服务的名，不要写错
           predicates:
-            - Path=/mybatis/model/**         #断言，路径相匹配的进行路由
+            - Path=/mybatis/model/**
+        - id: order_test #  payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名
+          uri: lb://CLOUD-ORDER-SERVICE   #匹配后提供服务的路由地址，lb后跟提供服务的微服务的名，不要写错
+          predicates:
+            - Path=/test/test/**
     loadbalancer:
       ribbon:
         enabled: false
@@ -34,7 +37,7 @@ spring:
 eureka:
   client:
     service-url:
-      #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
-      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
+#      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
   instance:
     prefer-ip-address: true
