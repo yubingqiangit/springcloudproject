@@ -2,15 +2,14 @@ package com.yu.controller;
 import com.alibaba.fastjson.JSON;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.yu.common.CommonResult;
+import com.yu.common.RedisUtil;
 import com.yu.feign.FeignService;
 import com.yu.model.ModelStakeRel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.Resource;
 
@@ -30,6 +29,9 @@ public class OrderConsumeController {
     private RestTemplate restTemplate;
     @Resource
     private FeignService feignService;
+
+    @Value("${lock.key}")
+    private String lockKey;
 
 
     @GetMapping("/test/test/{id}")
@@ -87,13 +89,35 @@ public class OrderConsumeController {
         return commonResult;
     }
 
+    /**
+     * feign构造多参get请求每个参数对应一个@PathVariable
+     * @param modelStakeRel
+     * @return
+     */
     @GetMapping("/get/modelparams")   //http://localhost/get/modelparams?id=1&modelId=343434343
     public CommonResult<ModelStakeRel> getModelParams(ModelStakeRel modelStakeRel){
         logger.info("ModelStakeRel======"+ JSON.toJSONString(modelStakeRel));
+        logger.info("redis lock key:{}", lockKey.concat(modelStakeRel.getModelId()));
+        String setNX = RedisUtil.getRedisUtil().setNX(lockKey.concat(modelStakeRel.getModelId()), modelStakeRel.getModelId(), 50);
+        if ("error".equals(setNX))
+            return new CommonResult<>(600, String.format("重复请求，modelId::[<%s>]",modelStakeRel.getModelId()));
         CommonResult<ModelStakeRel> model = feignService.getModelByParams(modelStakeRel.getId(), modelStakeRel.getModelId());
         logger.info("get model by more params result{}", model);
         return model;
     }
+
+    /**
+     * feign构造多参post请求
+     * @param modelStakeRel
+     * @return
+     */
+    @RequestMapping(value = "/post/model")
+    public CommonResult<ModelStakeRel> getModlePost(@RequestBody ModelStakeRel modelStakeRel) {
+        logger.info("method getModelPost ModelStaleRel:{}", JSON.toJSON(modelStakeRel));
+        CommonResult<ModelStakeRel> model = feignService.getModelByParams(modelStakeRel.getId(), modelStakeRel.getModelId());
+        return model;
+    }
+
 
 
     /**

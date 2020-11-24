@@ -51,6 +51,12 @@ public class PaymentController {
         return new CommonResult<>(model);
     }
 
+    /**
+     * feign构造多参get请求controller
+     * @param id
+     * @param modelId
+     * @return
+     */
     @RequestMapping(value = "/mybatis/{id}/{modelId}",method = RequestMethod.GET)
     public CommonResult<com.yu.entity.ModelStakeRel> getModelByParams(@PathVariable("id")Integer id, @PathVariable("modelId")String modelId) {
         logger.info("======id{},modelId{}",id,modelId);
@@ -59,5 +65,20 @@ public class PaymentController {
         if (modelStakeRel == null)
             return new CommonResult<>(444, String.format("server port::[<%s>]model params  do not found exception.",serverPort));
         return new CommonResult<>(modelStakeRel);
+    }
+
+    /**
+     * fengin构造多参post请求controller
+     * @param modelStakeRel
+     * @return
+     */
+    @RequestMapping(value = "/post/model",method = RequestMethod.POST)
+    public CommonResult<com.yu.entity.ModelStakeRel> getModlePost(@RequestBody com.yu.model.ModelStakeRel modelStakeRel) {
+        logger.info("method getModelPost modelStakeRel:{}", JSON.toJSON(modelStakeRel));
+        com.yu.entity.ModelStakeRel modelByParams = modelService.getModelByParams(modelStakeRel.getId(), modelStakeRel.getModelId());
+        logger.info("model params result{}",JSON.toJSON(modelByParams));
+        if (modelStakeRel == null)
+            return new CommonResult<>(444, String.format("server port::[<%s>]model params  do not found exception.",serverPort));
+        return new CommonResult<>(modelByParams);
     }
 }

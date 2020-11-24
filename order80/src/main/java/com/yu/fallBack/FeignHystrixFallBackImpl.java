@@ -30,4 +30,15 @@ public class FeignHystrixFallBackImpl implements FeignService {
         System.out.println("************************openfeign-hystrix-getForMybatis****************************");
         return new CommonResult<>(405,"method getModelByParams openfeign hystrix error.");
     }
+
+    /**
+     * feign构造多参post请求
+     * @param modelStakeRel
+     * @return
+     */
+    @Override
+    public CommonResult<ModelStakeRel> getModlePost(ModelStakeRel modelStakeRel) {
+        System.out.println("************************openfeign-hystrix-getForMybatis****************************");
+        return new CommonResult<>(405,"method getModlePost openfeign hystrix error.");
+    }
 }

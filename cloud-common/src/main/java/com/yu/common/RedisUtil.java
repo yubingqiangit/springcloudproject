@@ -1,5 +1,7 @@
 package com.yu.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.BinaryClient;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -15,6 +17,7 @@ import java.util.Set;
  * @date 2018/7/13 下午4:15
  */
 public class RedisUtil {
+    private static final Logger logger = LoggerFactory.getLogger(RedisUtil.class);
     private JedisPool pool = null;
 
     private RedisUtil() {
@@ -107,6 +110,16 @@ public class RedisUtil {
     public Long setnx(String key, String value) {
         Jedis jedis = getJedis();
         return jedis.setnx(key, value);
+    }
+
+    public String setNX(String key,String value,int time) {
+        Jedis jedis = getJedis();
+        Long setnx = jedis.setnx(key, value);
+        if (setnx == 0)
+            return "error";
+        //加锁成功，设置生效时间
+        jedis.expire(key, time);
+        return "success";
     }
 
     /**

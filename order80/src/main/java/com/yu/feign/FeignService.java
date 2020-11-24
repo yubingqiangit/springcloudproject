@@ -23,6 +23,21 @@ public interface FeignService {
     @GetMapping("/mybatis/model/{id}")
     public CommonResult<ModelStakeRel> getForMybatis(@PathVariable("id") Integer id);
 
+    /**
+     * feign构造多参get请求-每个参数对应一个@PathVariable
+     * @param id
+     * @param modelId
+     * @return
+     */
     @RequestMapping(value = "/mybatis/{id}/{modelId}",method = RequestMethod.GET)
     public CommonResult<ModelStakeRel> getModelByParams(@PathVariable("id") Integer id,@PathVariable("modelId")String modelId);
+
+
+    /**
+     * feign构造多参post请求
+     * @param modelStakeRel
+     * @return
+     */
+    @RequestMapping(value = "/post/model")
+    public CommonResult<ModelStakeRel> getModlePost(@RequestBody ModelStakeRel modelStakeRel);
 }
