@@ -9,11 +9,20 @@ import java.util.Date;
  * @date 2020/9/23 8:56 
  */
 public class ModelStakeRel implements Serializable {
+    private Integer id;
     private String serverType;
     private String modelId;
     private String stakeNo;
     private String chargePort;
     private Date relTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getServerType() {
         return serverType;

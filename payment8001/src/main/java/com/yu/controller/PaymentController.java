@@ -8,10 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Date;
 
 /**
@@ -52,5 +50,15 @@ public class PaymentController {
         }
         System.out.println(model.toString());
         return new CommonResult<>(model);
+    }
+
+    @RequestMapping(value = "/mybatis/{id}/{modelId}",method = RequestMethod.GET)
+    public CommonResult<ModelStakeRel> getModelByParams( @PathVariable("id")Integer id,@PathVariable("modelId")String modelId) {
+        logger.info("======id{},modelId{}",id,modelId);
+        ModelStakeRel modelStakeRel = modelService.getModelByParams(id, modelId);
+        logger.info("model params result{}",JSON.toJSON(modelStakeRel));
+        if (modelStakeRel == null)
+            return new CommonResult<>(444, String.format("server port::[<%s>]model params  do not found exception.",serverPort));
+        return new CommonResult<>(modelStakeRel);
     }
 }

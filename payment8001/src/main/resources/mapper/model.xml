@@ -15,4 +15,7 @@
        select * from pc_model_stake_rel where id = #{id}
     </select>
 
+    <select id = "getModelByParams"  resultMap="ModelStakeRelMap">
+       select * from pc_model_stake_rel where id = #{arg0} AND  model_id = #{arg1}
+    </select>
 </mapper>

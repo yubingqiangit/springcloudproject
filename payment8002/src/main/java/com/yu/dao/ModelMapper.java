@@ -3,6 +3,7 @@ package com.yu.dao;
 
 import com.yu.entity.ModelStakeRel;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * TODO 
@@ -16,4 +17,5 @@ public interface ModelMapper {
     //@Select("SELECT * FROM pc_model_stake_rel WHERE id = #{id}")
     ModelStakeRel getModelStakeRelById(Integer id);
 
+    ModelStakeRel getModelByParams( Integer id, String modelId);
 }

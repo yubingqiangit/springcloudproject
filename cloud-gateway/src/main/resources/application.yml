@@ -19,10 +19,10 @@ spring:
           uri: lb://CLOUD-PAYMENT-SERVICE   #匹配后提供服务的路由地址，lb后跟提供服务的微服务的名，不要写错
           predicates:
             - Path=/mybatis/model/**
-        - id: order_test #  payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名
+        - id: order_test #  payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名  http://localhost:7300/get/modelparams?id=1&modelId=343434343
           uri: lb://CLOUD-ORDER-SERVICE   #匹配后提供服务的路由地址，lb后跟提供服务的微服务的名，不要写错
           predicates:
-            - Path=/test/test/**
+            - Path=/get/modelparams/**
     loadbalancer:
       ribbon:
         enabled: false

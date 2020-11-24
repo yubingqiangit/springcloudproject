@@ -13,5 +13,7 @@ public interface ModelService {
 
     ModelStakeRel getModelStakeRelById(@PathVariable("id") Integer id);
 
+    ModelStakeRel getModelByParams(@PathVariable("id") Integer id, @PathVariable("modelId") String modelId);
+
 
 }

@@ -24,4 +24,10 @@ public class ModelServiceImpl implements ModelService {
         ModelStakeRel modelStakeRel = modelMapper.getModelStakeRelById(id);
         return modelStakeRel;
     }
+
+    @Override
+    public ModelStakeRel getModelByParams(Integer id, String modelId) {
+        ModelStakeRel modelByParams = modelMapper.getModelByParams(id, modelId);
+        return modelByParams;
+    }
 }

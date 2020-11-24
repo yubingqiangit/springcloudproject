@@ -87,6 +87,15 @@ public class OrderConsumeController {
         return commonResult;
     }
 
+    @GetMapping("/get/modelparams")   //http://localhost/get/modelparams?id=1&modelId=343434343
+    public CommonResult<ModelStakeRel> getModelParams(ModelStakeRel modelStakeRel){
+        logger.info("ModelStakeRel======"+ JSON.toJSONString(modelStakeRel));
+        CommonResult<ModelStakeRel> model = feignService.getModelByParams(modelStakeRel.getId(), modelStakeRel.getModelId());
+        logger.info("get model by more params result{}", model);
+        return model;
+    }
+
+
     /**
      * 基于restTempleate|openfeign回调函数配置hystrix方式(一)
      * @param id

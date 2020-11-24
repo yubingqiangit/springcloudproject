@@ -16,4 +16,6 @@ public interface ModelMapper {
     //@Select("SELECT * FROM pc_model_stake_rel WHERE id = #{id}")
     ModelStakeRel getModelStakeRelById(Integer id);
 
+    ModelStakeRel getModelByParams( Integer id, String modelId);
+
 }

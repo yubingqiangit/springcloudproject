@@ -3,11 +3,10 @@ package com.yu.feign;
 import com.yu.common.CommonResult;
 import com.yu.fallBack.FeignHystrixFallBackImpl;
 import com.yu.model.ModelStakeRel;
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * TODO 
@@ -23,4 +22,7 @@ public interface FeignService {
 
     @GetMapping("/mybatis/model/{id}")
     public CommonResult<ModelStakeRel> getForMybatis(@PathVariable("id") Integer id);
+
+    @RequestMapping(value = "/mybatis/{id}/{modelId}",method = RequestMethod.GET)
+    public CommonResult<ModelStakeRel> getModelByParams(@PathVariable("id") Integer id,@PathVariable("modelId")String modelId);
 }

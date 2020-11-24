@@ -2,6 +2,7 @@ package com.yu.service;
 
 import com.yu.entity.ModelStakeRel;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * TODO 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ModelService {
 
     ModelStakeRel getModelStakeRelById(@PathVariable("id")Integer id);
+
+    ModelStakeRel getModelByParams(@PathVariable("id") Integer id, @PathVariable("modelId") String modelId);
 
 
 }
