@@ -3,6 +3,8 @@ package com.yu.controller;
 import com.alibaba.fastjson.JSON;
 import com.yu.common.CommonResult;
 import com.yu.entity.ModelStakeRel;
+import com.yu.exception.CommonException;
+import com.yu.exception.ExceptionEnums;
 import com.yu.service.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * TODO 
@@ -77,9 +80,25 @@ public class PaymentController {
     public CommonResult<ModelStakeRel> getModlePost(@RequestBody com.yu.model.ModelStakeRel modelStakeRel) {
         logger.info("method getModelPost modelStakeRel:{}", JSON.toJSON(modelStakeRel));
         ModelStakeRel modelByParams = modelService.getModelByParams(modelStakeRel.getId(), modelStakeRel.getModelId());
-        logger.info("model params result{}",JSON.toJSON(modelByParams));
+        logger.info("model params result::{}",JSON.toJSON(modelByParams));
         if (modelStakeRel == null)
-            return new CommonResult<>(444, String.format("server port::[<%s>]model params  do not found exception.",serverPort));
+            /*return new CommonResult<>(444, String.format("server port::[<%s>]model params  do not found exception.",serverPort));*/
+            throw new CommonException(ExceptionEnums.valueOf("MODEL_NOT_FOUND"));
         return new CommonResult<>(modelByParams);
+    }
+
+    /**
+     * feign构造多参post请求列表
+     * @param modelStakeRel
+     * @return
+     */
+    @RequestMapping(value = "/post/list",method = RequestMethod.POST)
+    public CommonResult<List<ModelStakeRel>> getModelPostList(@RequestBody com.yu.entity.ModelStakeRel modelStakeRel) {
+        logger.info("method getModelPost modelStakeRel:{}", JSON.toJSON(modelStakeRel));
+        List<com.yu.entity.ModelStakeRel> modelPostList = modelService.getModelPostList(modelStakeRel);
+        modelPostList.stream().forEach(x->{
+            logger.info("modelPostList:{}",JSON.toJSONString(x));
+        });
+        return new CommonResult<List<com.yu.entity.ModelStakeRel>>(modelPostList);
     }
 }

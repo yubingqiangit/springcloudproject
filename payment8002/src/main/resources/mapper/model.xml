@@ -19,4 +19,12 @@
        select * from pc_model_stake_rel where id = #{arg0} AND  model_id = #{arg1}
     </select>
 
+    <select id = "getModelPostList" parameterType="com.yu.entity.ModelStakeRel"  resultMap="ModelStakeRelMap" >
+       select * from pc_model_stake_rel
+       where
+       id > #{id}
+       and
+       charge_port > #{chargePort}
+    </select>
+
 </mapper>

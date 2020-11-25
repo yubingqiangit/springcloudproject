@@ -1,7 +1,10 @@
 package com.yu.service;
 
 import com.yu.entity.ModelStakeRel;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 /**
  * TODO 
@@ -15,5 +18,6 @@ public interface ModelService {
 
     ModelStakeRel getModelByParams(@PathVariable("id") Integer id, @PathVariable("modelId") String modelId);
 
+    List<ModelStakeRel> getModelPostList(ModelStakeRel modelStakeRel);
 
 }

@@ -4,6 +4,8 @@ package com.yu.dao;
 import com.yu.entity.ModelStakeRel;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * TODO 
  * @version 1.0
@@ -17,5 +19,8 @@ public interface ModelMapper {
     ModelStakeRel getModelStakeRelById(Integer id);
 
     ModelStakeRel getModelByParams( Integer id, String modelId);
+
+    //@Select("SELECT * FROM pc_model_stake_rel")
+    List<ModelStakeRel> getModelPostList(ModelStakeRel modelStakeRel);
 
 }

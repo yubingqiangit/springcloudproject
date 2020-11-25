@@ -2,8 +2,11 @@ package com.yu.dao;
 
 
 import com.yu.entity.ModelStakeRel;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 /**
  * TODO 
@@ -18,4 +21,7 @@ public interface ModelMapper {
     ModelStakeRel getModelStakeRelById(Integer id);
 
     ModelStakeRel getModelByParams( Integer id, String modelId);
+
+    //@Select("SELECT * FROM pc_model_stake_rel")
+    List<ModelStakeRel> getModelPostList(ModelStakeRel modelStakeRel);
 }

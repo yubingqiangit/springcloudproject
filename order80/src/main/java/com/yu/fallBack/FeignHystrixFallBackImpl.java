@@ -5,6 +5,8 @@ import com.yu.feign.FeignService;
 import com.yu.model.ModelStakeRel;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * TODO 
  * @version 1.0
@@ -40,5 +42,11 @@ public class FeignHystrixFallBackImpl implements FeignService {
     public CommonResult<ModelStakeRel> getModlePost(ModelStakeRel modelStakeRel) {
         System.out.println("************************openfeign-hystrix-getForMybatis****************************");
         return new CommonResult<>(405,"method getModlePost openfeign hystrix error.");
+    }
+
+    @Override
+    public CommonResult<List<ModelStakeRel>> getModelPostList(ModelStakeRel modelStakeRel) {
+        System.out.println("************************openfeign-hystrix-getForMybatis****************************");
+        return new CommonResult<>(405,"method getModelPostList openfeign hystrix error.");
     }
 }

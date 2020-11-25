@@ -1,6 +1,7 @@
 package com.yu.common;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * TODO 
@@ -12,20 +13,37 @@ public class CommonResult<T> implements Serializable {
     private Integer code;
     private String message;
     private T data;
+    private List<T> list;
+
 
     public CommonResult() {
 
     }
 
+    public static CommonResult error(Integer errorCode, String info) {
+        return new CommonResult(errorCode, info);
+    }
+
     public CommonResult( T data) {
-        this.code = 200;
+        this.code = 0;
         this.message = "success";
         this.data = data;
     }
+
+    public CommonResult(List<T> list) {
+        this.code = 0;
+        this.message = "success";
+        this.list = list;
+    }
+
     public CommonResult(Integer code, String message) {
         this.code = code;
         this.message = message;
         this.data = null;
+    }
+
+    public CommonResult (String message) {
+        this.message = message;
     }
 
     @Override

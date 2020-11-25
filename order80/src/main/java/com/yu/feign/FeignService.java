@@ -8,6 +8,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * TODO 
  * @version 1.0
@@ -40,4 +42,8 @@ public interface FeignService {
      */
     @RequestMapping(value = "/post/model")
     public CommonResult<ModelStakeRel> getModlePost(@RequestBody ModelStakeRel modelStakeRel);
+
+
+    @RequestMapping(value = "/post/list")
+    public CommonResult<List<ModelStakeRel>> getModelPostList(@RequestBody ModelStakeRel modelStakeRel);
 }

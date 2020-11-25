@@ -3,6 +3,8 @@ import com.alibaba.fastjson.JSON;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.yu.common.CommonResult;
 import com.yu.common.RedisUtil;
+import com.yu.exception.ExceptionEnums;
+import com.yu.exception.CommonException;
 import com.yu.feign.FeignService;
 import com.yu.model.ModelStakeRel;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * TODO 
@@ -111,12 +114,25 @@ public class OrderConsumeController {
      * @param modelStakeRel
      * @return
      */
-    @RequestMapping(value = "/post/model")
+    @RequestMapping(value = "/post/model",method = RequestMethod.POST)
     public CommonResult<ModelStakeRel> getModlePost(@RequestBody ModelStakeRel modelStakeRel) {
         logger.info("method getModelPost ModelStaleRel:{}", JSON.toJSON(modelStakeRel));
-        CommonResult<ModelStakeRel> model = feignService.getModelByParams(modelStakeRel.getId(), modelStakeRel.getModelId());
+        CommonResult<ModelStakeRel> model = feignService.getModlePost(modelStakeRel);
+        logger.info("response model::{}", JSON.toJSON(model));
         return model;
     }
+
+    /**
+     * feign构造多参post请求列表
+     * @param modelStakeRel
+     * @return
+     */
+    @RequestMapping(value = "/post/list",method = RequestMethod.POST)
+    public CommonResult<List<ModelStakeRel>> getModelPostList(@RequestBody ModelStakeRel modelStakeRel) {
+        CommonResult<List<ModelStakeRel>> modelPostList = feignService.getModelPostList(modelStakeRel);
+        return modelPostList;
+    }
+
 
 
 

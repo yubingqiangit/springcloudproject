@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * TODO 
@@ -77,8 +78,21 @@ public class PaymentController {
         logger.info("method getModelPost modelStakeRel:{}", JSON.toJSON(modelStakeRel));
         com.yu.entity.ModelStakeRel modelByParams = modelService.getModelByParams(modelStakeRel.getId(), modelStakeRel.getModelId());
         logger.info("model params result{}",JSON.toJSON(modelByParams));
-        if (modelStakeRel == null)
-            return new CommonResult<>(444, String.format("server port::[<%s>]model params  do not found exception.",serverPort));
         return new CommonResult<>(modelByParams);
+    }
+
+    /**
+     * feign构造多参post请求列表
+     * @param modelStakeRel
+     * @return
+     */
+    @RequestMapping(value = "/post/list",method = RequestMethod.POST)
+    public CommonResult<List<com.yu.entity.ModelStakeRel>> getModelPostList(@RequestBody com.yu.entity.ModelStakeRel modelStakeRel) {
+        logger.info("method getModelPost modelStakeRel:{}", JSON.toJSON(modelStakeRel));
+        List<com.yu.entity.ModelStakeRel> modelPostList = modelService.getModelPostList(modelStakeRel);
+        modelPostList.stream().forEach(x->{
+            logger.info("modelPostList:{}",JSON.toJSONString(x));
+        });
+        return new CommonResult<List<com.yu.entity.ModelStakeRel>>(modelPostList);
     }
 }
