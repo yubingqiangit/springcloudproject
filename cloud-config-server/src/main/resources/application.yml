@@ -1,0 +1,28 @@
+server:
+  port: 3301
+
+spring:
+  application:
+    name: cloud-config-server  # \u5E94\u7528\u540D\u79F0
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/yubingqiangit/cloud-config.git #\u914D\u7F6E\u6587\u4EF6\u6240\u5728\u4ED3\u5E93  http://localhost:3301/cloud-config-client/dev/main
+          username: 990862374@qq.com
+          password: woshiyubingqian2
+          default-label: main #\u914D\u7F6E\u6587\u4EF6\u5206\u652F
+          search-paths: config  #\u914D\u7F6E\u6587\u4EF6\u6240\u5728\u6839\u76EE\u5F55
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# \u6253\u5370log\u65E5\u5FD7
+logging:
+  level:
+    root: warn
+    org.springframework.cloud: debug
