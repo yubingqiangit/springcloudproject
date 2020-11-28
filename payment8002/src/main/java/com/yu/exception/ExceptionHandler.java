@@ -21,10 +21,9 @@ public class ExceptionHandler {
     @ResponseBody
     @org.springframework.web.bind.annotation.ExceptionHandler(value= Exception.class) //处理的异常类型
     public CommonResult myExceptionHandler(Exception e){
-        logger.info("myExceptionHandler===========" + e.toString());
+        logger.info("myExceptionHandler===========" + e.getMessage().toString());
         if (e instanceof CommonException) {
             CommonException commonException = (CommonException) e;
-
             if(commonException.getErrorCode()==null){
                 return new CommonResult(commonException.getMessage());
             }

@@ -2,6 +2,8 @@ package com.yu.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import com.netflix.zuul.exception.ZuulException;
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -17,7 +19,7 @@ public class TokenFilter extends ZuulFilter {
      */
     @Override
     public String filterType() {
-        return "pre";
+        return FilterConstants.PRE_TYPE;
     }
 
     /**
@@ -41,7 +43,7 @@ public class TokenFilter extends ZuulFilter {
      * 编写过滤器拦截业务逻辑代码
      */
     @Override
-    public Object run() {
+    public Object run() throws ZuulException {
         RequestContext currentContext = RequestContext.getCurrentContext();
         HttpServletRequest request = currentContext.getRequest();
         String token = request.getParameter("token");

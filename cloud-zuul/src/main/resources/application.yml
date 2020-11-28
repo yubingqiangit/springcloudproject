@@ -19,6 +19,7 @@ eureka:
       defaultZone:  http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
 
 #请求地址：http://localhost:7200/service-a/get/openfeign/1?token=2222
+#http://localhost:7200/service-a/post/list/?token=222
 zuul:
   routes:
     # 设置服务a 路径名称 随便起
