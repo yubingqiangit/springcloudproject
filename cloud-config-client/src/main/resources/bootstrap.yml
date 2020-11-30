@@ -1,3 +1,6 @@
+server:
+  port: 3302
+
 spring:
   application:
     name: cloud-config-client
@@ -5,6 +8,22 @@ spring:
     active: dev
   cloud:
     config:
+      name: cloud-config-client-dev
       uri: http://localhost:3301
       label: main
       profile: dev
+
+management:
+  endpoint:
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+data:
+  env: NaN
+  user:
+    username: NaN
+    password: NaN
