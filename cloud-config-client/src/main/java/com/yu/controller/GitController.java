@@ -29,8 +29,5 @@ public class GitController {
         return gitConfig;
     }
 
-    @GetMapping(value = "autoShow")
-    public Object autoShow(){
-        return gitAutoRefreshConfig;
-    }
+
 }

@@ -2,6 +2,16 @@ server:
   port: 3302
 
 spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
   application:
     name: cloud-config-client
   profiles:
@@ -14,9 +24,6 @@ spring:
       profile: dev
 
 management:
-  endpoint:
-    shutdown:
-      enabled: false
   endpoints:
     web:
       exposure:

@@ -2,6 +2,11 @@ server:
   port: 3301
 
 spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
   application:
     name: cloud-config-server  # \u5E94\u7528\u540D\u79F0
   cloud:
