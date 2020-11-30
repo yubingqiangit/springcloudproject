@@ -1,5 +1,7 @@
 spring:
-#  security:
+  main:
+    allow-bean-definition-overriding: true
+#    security:
 #    basic:
 #      enabled: true               # 开启基于HTTP basic的认证
 #    user:

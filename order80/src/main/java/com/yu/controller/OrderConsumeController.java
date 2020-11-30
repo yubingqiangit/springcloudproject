@@ -5,6 +5,7 @@ import com.yu.common.CommonResult;
 import com.yu.common.RedisUtil;
 import com.yu.exception.ExceptionEnums;
 import com.yu.exception.CommonException;
+import com.yu.feign.CommonFeignClient;
 import com.yu.feign.FeignService;
 import com.yu.model.ModelStakeRel;
 import org.slf4j.Logger;
@@ -32,6 +33,9 @@ public class OrderConsumeController {
     private RestTemplate restTemplate;
     @Resource
     private FeignService feignService;
+
+    @Resource
+    private CommonFeignClient commonFeignClient;
 
     @Value("${lock.key}")
     private String lockKey;
@@ -133,7 +137,16 @@ public class OrderConsumeController {
         return modelPostList;
     }
 
-
+    /**
+     * feign集成示例
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/common/model/{id}",method = RequestMethod.GET)
+    public CommonResult<ModelStakeRel> getModelPostList(@PathVariable("id") Integer id) {
+        CommonResult<ModelStakeRel> modelStakeRelCommonResult = commonFeignClient.commonResult(id);
+        return modelStakeRelCommonResult;
+    }
 
 
     /**
