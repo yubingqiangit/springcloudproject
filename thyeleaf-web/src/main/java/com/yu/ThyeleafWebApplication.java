@@ -1,21 +1,19 @@
 package com.yu;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- * springcloud 集成consul
- * windows 使用开发者模式启动consul命令：consul agent -dev
+ * TODO
  * @version 1.0
  * @author yubingqian
- * @date 2020/9/24 16:28 
+ * @date 2020/12/1 15:59 
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@EnableDiscoveryClient
-public class ConsulPaymentApplication7003 {
+public class ThyeleafWebApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ConsulPaymentApplication7003.class,args);
+        SpringApplication.run(ThyeleafWebApplication.class, args);
     }
 }

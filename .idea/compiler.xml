@@ -21,6 +21,7 @@
         <module name="order80" />
         <module name="payment8001" />
         <module name="payment8002" />
+        <module name="thyeleaf-web" />
       </profile>
     </annotationProcessing>
   </component>

@@ -18,6 +18,7 @@ spring:
           password: woshiyubingqian2
           default-label: main #\u914D\u7F6E\u6587\u4EF6\u5206\u652F
           search-paths: config  #\u914D\u7F6E\u6587\u4EF6\u6240\u5728\u6839\u76EE\u5F55
+          force-pull: true
 
 
 management:
