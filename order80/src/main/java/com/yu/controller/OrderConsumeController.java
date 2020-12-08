@@ -1,6 +1,7 @@
 package com.yu.controller;
 import com.alibaba.fastjson.JSON;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.yu.annotation.factory.OrderStrategyFactory;
 import com.yu.common.CommonResult;
 import com.yu.common.RedisUtil;
 import com.yu.exception.ExceptionEnums;
@@ -158,6 +159,12 @@ public class OrderConsumeController {
     @GetMapping("get/hystrix/{id}")
     public CommonResult<ModelStakeRel> getForHystrix(@PathVariable("id") Integer id) {
         return feignService.getForMybatis(id);
+    }
+
+    @GetMapping("/annotation/{channel}")
+    public CommonResult<Object> testAnnotation(@PathVariable("channel") Integer channel) {
+        Object o = OrderStrategyFactory.getInstance().getStrategy(channel).excute(" todo......");
+        return new CommonResult<Object>(o);
     }
 
     /**
