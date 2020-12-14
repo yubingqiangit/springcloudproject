@@ -2,6 +2,8 @@ package com.yu.fallBack;
 
 import com.yu.common.CommonResult;
 import com.yu.feign.FeignService;
+import com.yu.feign.HttpFeignGetService;
+import com.yu.feign.HttpFeignPostService;
 import com.yu.model.ModelStakeRel;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,7 @@ import java.util.List;
  * @date 2020/9/27 11:51 
  */
 @Component
-public class FeignHystrixFallBackImpl implements FeignService {
+public class  FeignHystrixFallBackImpl implements FeignService, HttpFeignGetService, HttpFeignPostService {
     @Override
     public CommonResult<ModelStakeRel> getCount() {
         System.out.println("************************openfeign-hystrix-getCount****************************");
@@ -48,5 +50,18 @@ public class FeignHystrixFallBackImpl implements FeignService {
     public CommonResult<List<ModelStakeRel>> getModelPostList(ModelStakeRel modelStakeRel) {
         System.out.println("************************openfeign-hystrix-getForMybatis****************************");
         return new CommonResult<>(405,"method getModelPostList openfeign hystrix error.");
+    }
+
+
+    @Override
+    public List<String> getAllUrl() {
+        System.out.println("************************openfeign-hystrix-getAllUrl****************************");
+        return (List<String>) new CommonResult<String>(405,"method getAllUrl openfeign hystrix error.");
+    }
+
+    @Override
+    public String getImages(String page, String count) {
+        System.out.println("************************openfeign-hystrix-getAllUrl****************************");
+        return String.valueOf(new CommonResult<Object>(405,"method getAllUrl openfeign hystrix error."));
     }
 }

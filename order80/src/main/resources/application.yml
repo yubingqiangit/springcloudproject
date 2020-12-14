@@ -77,3 +77,8 @@ logging:
       yu:
         dao : debug
 
+
+
+
+api:
+  url: https://api.apiopen.top
