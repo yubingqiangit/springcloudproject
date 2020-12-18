@@ -31,6 +31,24 @@ spring:
           uri: lb://CLOUD-ORDER-SERVICE   #匹配后提供服务的路由地址，lb后跟提供服务的微服务的名，不要写错
           predicates:
             - Path=/post/list/**
+        - id: order_test #  payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名  http://localhost:7300/get/modelparams?id=1&modelId=343434343
+          uri: lb://CLOUD-ORDER-SERVICE   #匹配后提供服务的路由地址，lb后跟提供服务的微服务的名，不要写错
+          predicates:
+            - Path=/http/post/**
+        - id: order_test #  payment_routh    #路由的ID，没有固定规则但要求唯一，简易配合服务名  http://localhost:7300/get/modelparams?id=1&modelId=343434343
+          uri: lb://CLOUD-ORDER-SERVICE   #匹配后提供服务的路由地址，lb后跟提供服务的微服务的名，不要写错
+          predicates:
+            - Path=/http/get/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                #用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象
+                #key-resolver: "#{@hostAddKeyResolver}"
+                key-resolver: "#{@ipKeyResolver}"
+                #允许用户每秒处理多少个请求
+                redis-rate-limiter.replenishRate: 1
+                #令牌桶的容量，允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 2
     loadbalancer:
       ribbon:
         enabled: false
