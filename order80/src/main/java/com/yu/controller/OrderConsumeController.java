@@ -108,7 +108,7 @@ public class OrderConsumeController {
         logger.info("redis lock key:{}", lockKey.concat(modelStakeRel.getModelId()));
         String setNX = RedisUtil.getRedisUtil().setNX(lockKey.concat(modelStakeRel.getModelId()), modelStakeRel.getModelId(), 50);
         if ("error".equals(setNX))
-            return new CommonResult<>(600, String.format("重复请求，modelId::[<%s>]",modelStakeRel.getModelId()));
+            throw new CommonException(ExceptionEnums.valueOf("REQUEST_REUSE"));
         CommonResult<ModelStakeRel> model = feignService.getModelByParams(modelStakeRel.getId(), modelStakeRel.getModelId());
         logger.info("get model by more params result{}", model);
         return model;

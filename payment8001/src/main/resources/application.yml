@@ -1,6 +1,39 @@
 server:
   port: 8001 #服务端口
 spring:
+  cloud:
+    stream:
+      bindings:
+        log_input:            #接收消息
+          destination: kite.log.messages
+          binder: local_rabbit
+          group: logConsumer-group1
+        model_input:            #接收消息
+          destination: log.model.messages
+          binder: local_rabbit
+          group: modelConsumer-group1
+#        log_output:          #推送消息
+#          destination: kite.log.messages
+#          binder: local_rabbit
+#          group: logConsumer-group1
+        log_format_input:
+          destination: kite.log.format.messages
+          binder: local_rabbit
+          group: logFormat-group1
+#        log_format_output:
+#          destination: kite.log.format.messages
+#          binder: local_rabbit
+#          group: logFormat-group1
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: admin
+                password: admin
 #  security:
 #    basic:
 #      enabled: true               # 开启基于HTTP basic的认证

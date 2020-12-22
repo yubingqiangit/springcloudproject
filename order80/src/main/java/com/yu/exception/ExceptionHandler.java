@@ -21,16 +21,16 @@ public class ExceptionHandler {
     @ResponseBody
     @org.springframework.web.bind.annotation.ExceptionHandler(value= Exception.class) //处理的异常类型
     public CommonResult myExceptionHandler(Exception e){
-        logger.info("myExceptionHandler===========" + e.toString());
+        logger.info("ExceptionHandler>>>>>>>errorMessage::{}",e.getMessage().toString());
+        //自定义异常
         if (e instanceof CommonException) {
             CommonException commonException = (CommonException) e;
-
-            if(commonException.getErrorCode()==null){
-                return new CommonResult(commonException.getMessage());
-            }
+            if(commonException.getErrorCode()==null)
+                return new CommonResult(-1, commonException.getMessage());
             return new CommonResult(commonException.getErrorCode(),commonException.getMessage());
-        }else{
-            return CommonResult.error(-1, "系统异常~~.");
         }
+        //未知异常
+        return CommonResult.error(-1, "系统异常~~.");
+
     }
 }

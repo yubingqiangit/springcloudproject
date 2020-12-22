@@ -1,4 +1,48 @@
 spring:
+  cloud:    ##mq消息生产者配置
+    stream:
+      bindings:
+        log_format_output:
+          destination: kite.log.format.messages
+          binder: local_rabbit
+          group: logFormat-group1
+        log_output:
+          destination: kite.log.messages
+          binder: local_rabbit
+          group: logConsumer-group1
+        model_output:
+          destination: log.model.messages
+          binder: local_rabbit
+          group: modelConsumer-group1
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: admin
+                password: admin
+#  cloud:
+#    stream:
+#      bindings:
+#        input:
+#          destination: default.messages
+#          binder: local_rabbit
+#        output:
+#          destination: default.messages
+#          binder: local_rabbit
+#      binders:
+#        local_rabbit:
+#          type: rabbit
+#          environment:
+#            spring:
+#              rabbitmq:
+#                host: localhost
+#                port: 5672
+#                username: admin
+#                password: admin
   main:
     allow-bean-definition-overriding: true
 #    security:

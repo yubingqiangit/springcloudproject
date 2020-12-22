@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class StreamTest {
     public static void main(String[] args) {
-        List<ModelStakeRel> list = new ArrayList<>();
+       /* List<ModelStakeRel> list = new ArrayList<>();
         ModelStakeRel m = new ModelStakeRel();
        // m.setStakeNo("1111");
         m.setModelId("1000000000");
@@ -35,6 +35,22 @@ public class StreamTest {
         Set<Map.Entry<String, String>> entrySet = map.entrySet();
         for (Map.Entry<String, String> stringStringEntry : entrySet) {
             System.err.println(stringStringEntry.getKey() + "|" + stringStringEntry.getValue());
+        }*/
+        List<String> list = new ArrayList<>();
+        try {
+            list = get(list);
+            throw new RuntimeException();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+       list.stream().forEach(e->{
+           System.out.println(e);
+       });
+    }
+
+    public static List<String> get(List<String> list) {
+        list.add("adddd");
+
+        return list;
     }
 }

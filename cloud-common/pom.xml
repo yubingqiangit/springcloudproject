@@ -12,7 +12,11 @@
     <artifactId>cloud-common</artifactId>
     <packaging>jar</packaging>
     <dependencies>
-
+        <!--集成rebbitMq-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
         <!--<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

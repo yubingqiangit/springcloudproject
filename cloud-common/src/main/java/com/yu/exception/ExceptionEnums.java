@@ -9,7 +9,11 @@ package com.yu.exception;
 public enum ExceptionEnums {
 
 MODEL_NOT_FOUND("model not found error.",2001),
-MODEL_LIST_IS_EMPTY("model list is empty error.",2002);
+MODEL_LIST_IS_EMPTY("model list is empty error.",2002),
+REQUEST_REUSE("重复请求.",600);
+
+
+
     private String message;
     private Integer errorCode;
 
