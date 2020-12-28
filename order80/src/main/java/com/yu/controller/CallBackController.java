@@ -78,10 +78,18 @@ public class CallBackController {
     }
 
     @RequestMapping("/show")
-    public String hello(HttpServletRequest request, @RequestParam(value = "name", defaultValue = "springboot-thymeleaf") String name) {
+    public String show(HttpServletRequest request, @RequestParam(value = "name", defaultValue = "springboot-thymeleaf") String name) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         logger.info("show回调页面===========" +JSON.toJSONString(parameterMap));
         request.setAttribute("name", name);
         return "index";
+    }
+
+    @RequestMapping("/hello")
+    public String hello(HttpServletRequest request, @RequestParam(value = "name", defaultValue = "springboot-thymeleaf") String name) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        logger.info("hello回调页面===========" +JSON.toJSONString(parameterMap));
+        request.setAttribute("name", name);
+        return "hello";
     }
 }

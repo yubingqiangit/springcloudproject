@@ -3,11 +3,14 @@ package com.yu.feign;
 import com.yu.common.CommonResult;
 import com.yu.fallBack.FeignHystrixFallBackImpl;
 import com.yu.model.ModelStakeRel;
-import org.bouncycastle.math.raw.Mod;
+import com.yu.model.PayReqItem;
+import com.yu.model.PayRespItem;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -46,4 +49,19 @@ public interface FeignService {
 
     @RequestMapping(value = "/post/list")
     public CommonResult<List<ModelStakeRel>> getModelPostList(@RequestBody ModelStakeRel modelStakeRel);
+
+    /**
+     * 支付
+     * @param payItem
+     * @return
+     */
+    @RequestMapping(value = "/payment/pay")
+    public CommonResult<PayRespItem> pay(@RequestBody PayReqItem payItem);
+
+
+    @RequestMapping(value = "/payment/payget/{orderNo}/{amount}",method = RequestMethod.GET)
+    public CommonResult<PayRespItem> payGet(@PathVariable("orderNo") String orderNo,@PathVariable("amount")String amount);
+
+
+
 }

@@ -5,8 +5,12 @@ import com.yu.feign.FeignService;
 import com.yu.feign.HttpFeignGetService;
 import com.yu.feign.HttpFeignPostService;
 import com.yu.model.ModelStakeRel;
+import com.yu.model.PayReqItem;
+import com.yu.model.PayRespItem;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -50,6 +54,25 @@ public class  FeignHystrixFallBackImpl implements FeignService, HttpFeignGetServ
     public CommonResult<List<ModelStakeRel>> getModelPostList(ModelStakeRel modelStakeRel) {
         System.out.println("************************openfeign-hystrix-getForMybatis****************************");
         return new CommonResult<>(405,"method getModelPostList openfeign hystrix error.");
+    }
+
+
+
+    /**
+     * 支付
+     * @param payItem
+     * @return
+     */
+    @Override
+    public CommonResult<PayRespItem> pay(PayReqItem payItem) {
+        System.out.println("************************openfeign-hystrix-pay****************************");
+        return  new CommonResult<PayRespItem>(405,"method pay openfeign hystrix error.");
+    }
+
+    @Override
+    public CommonResult<PayRespItem> payGet(String orderNo, String amount) {
+        System.out.println("************************openfeign-hystrix-pay****************************");
+        return  new CommonResult<PayRespItem>(405,"method pay openfeign hystrix error.");
     }
 
 
