@@ -54,7 +54,7 @@ public class AlipayServiceImpl implements AlipayService {
         String orderNo = OrderNoRandom.getNo();
 
         //订单名称，必填
-        String subject = new String("沙箱环境测试");
+        String subject = new String("支付宝测试环境...");
         aliPayRequest.setBizContent("{\"out_trade_no\":\"" + orderNo + "\","
                 + "\"total_amount\":\"" + amount + "\","
                 + "\"subject\":\"" + subject + "\","
