@@ -66,7 +66,7 @@ public class LoadBalancerConfig extends AbstractLoadBalancerRule {
                 return null;
             }
             System.out.println("total========" + total);
-            if (total < 5) {
+            if (total < 4) {
                 server = upList.get(serverVersion);
                 total++;
             } else {

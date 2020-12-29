@@ -98,7 +98,8 @@ eureka:
 CLOUD-PAYMENT-SERVICE:  #服务提供名称
   ribbon:
     # 基于配置文件形式的 针对单个服务的 Ribbon 负载均衡策略
-    NFLoadBalancerRuleClassName: com.lb.LoadBalancerConfig  #自定义负载均衡策略
+    #NFLoadBalancerRuleClassName: com.lb.LoadBalancerConfig  #自定义负载均衡策略
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule   #轮询策略
 
 feign:
   hystrix:
