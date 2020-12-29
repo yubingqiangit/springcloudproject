@@ -23,9 +23,8 @@ public class LogMessageListener {
     ModelMapper modelMapper;
 
     /**
-     * 通过 MyProcessor.MESSAGE_INPUT 接收消息
-     * 有返回值时接收到消息并再次推送
-     * 然后通过 SendTo 将处理后的消息发送到 MyProcessor.LOG_FORMAT_OUTPUT
+     * 通过 MyProcessor.MODEL_MESSAGE_INPUT 接收消息
+     * 接收支付中心支付结果异步通知MQ
      * @param message
      * @return
      */
