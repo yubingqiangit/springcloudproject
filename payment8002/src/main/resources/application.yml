@@ -4,10 +4,10 @@ spring:
   cloud:
     stream:
       bindings:
-        model_input:            #接收消息
-          destination: log.model.messages
-          binder: local_rabbit
-          group: modelConsumer-group1
+#        model_input:            #接收消息
+#          destination: log.model.messages
+#          binder: local_rabbit
+#          group: modelConsumer-group1
         log_input:
           destination: kite.log.messages
           binder: local_rabbit
