@@ -12,7 +12,7 @@
 
     <!--更新支付单状态-->
     <insert id="updatePay" parameterType="com.yu.model.PayReqItem">
-        update pay_pay set state = 20 where orderNo = #{orderNo}
+        update pay_pay set state = 20,common = 20 where orderNo = #{orderNo}
     </insert>
 
 </mapper>
