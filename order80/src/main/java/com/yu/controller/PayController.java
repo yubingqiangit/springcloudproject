@@ -3,23 +3,19 @@ package com.yu.controller;
 import com.alibaba.fastjson.JSON;
 import com.yu.common.CommonResult;
 import com.yu.feign.FeignService;
-import com.yu.model.ModelStakeRel;
 import com.yu.model.PayReqItem;
 import com.yu.model.PayRespItem;
 import com.yu.utils.OrderNoRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * TODO 
+ * 支付入口
  * @version 1.0
  * @author yubingqian
  * @date 2020/12/28 9:05 
@@ -30,6 +26,12 @@ public class PayController {
     @Resource
     private FeignService feignService;
 
+    /**
+     * 模拟订单中心通过feign调支付中心实现支付预下单
+     * @param response
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/payment/center/pay")
     public String pay(HttpServletResponse response, HttpServletRequest request) {
         String no = OrderNoRandom.getNo();

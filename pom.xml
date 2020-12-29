@@ -26,6 +26,7 @@
       <module>cloud-config-server</module>
       <module>cloud-config-client</module>
       <module>thyeleaf-web</module>
+      <module>call-back</module>
 
 
   </modules>

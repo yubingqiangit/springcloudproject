@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * TODO 
+ * feign调用接口定义
  * @version 1.0
  * @author yubingqian
  * @date 2020/9/23 10:18 
@@ -47,6 +47,11 @@ public interface FeignService {
     public CommonResult<ModelStakeRel> getModlePost(@RequestBody ModelStakeRel modelStakeRel);
 
 
+    /**
+     * 请求列表
+     * @param modelStakeRel
+     * @return
+     */
     @RequestMapping(value = "/post/list")
     public CommonResult<List<ModelStakeRel>> getModelPostList(@RequestBody ModelStakeRel modelStakeRel);
 
@@ -59,6 +64,12 @@ public interface FeignService {
     public CommonResult<PayRespItem> pay(@RequestBody PayReqItem payItem);
 
 
+    /**
+     * 支付
+     * @param orderNo
+     * @param amount
+     * @return
+     */
     @RequestMapping(value = "/payment/payget/{orderNo}/{amount}",method = RequestMethod.GET)
     public CommonResult<PayRespItem> payGet(@PathVariable("orderNo") String orderNo,@PathVariable("amount")String amount);
 

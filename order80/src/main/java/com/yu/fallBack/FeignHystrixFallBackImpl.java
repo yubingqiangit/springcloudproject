@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * TODO 
+ * feign容错处理
  * @version 1.0
  * @author yubingqian
  * @date 2020/9/27 11:51 
