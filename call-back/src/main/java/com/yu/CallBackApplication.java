@@ -21,7 +21,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 @EnableEurekaClient
 @EnableFeignClients
 //@EnableHystrixDashboard
-//@EnableBinding(value = {MyProcessor.class})
+@EnableBinding(value = {MyProcessor.class})
 @MapperScan("com.yu.dao")
 public class CallBackApplication {
     public static void main(String[] args) {

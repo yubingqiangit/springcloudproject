@@ -8,10 +8,10 @@ spring:
           destination: kite.log.messages
           binder: local_rabbit
           group: logConsumer-group1
-        model_input:            #接收消息
-          destination: log.model.messages
-          binder: local_rabbit
-          group: modelConsumer-group1
+#        model_input:            #接收消息
+#          destination: log.model.messages
+#          binder: local_rabbit
+#          group: modelConsumer-group1
 #        log_output:          #推送消息
 #          destination: kite.log.messages
 #          binder: local_rabbit

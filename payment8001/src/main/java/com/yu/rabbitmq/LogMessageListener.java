@@ -42,8 +42,8 @@ public class LogMessageListener {
     }
 
 
-    @StreamListener(MyProcessor.MODEL_MESSAGE_INPUT)
+   /* @StreamListener(MyProcessor.MODEL_MESSAGE_INPUT)
     public void processModelMessage(String message) {
         logger.info("MODEL_MESSAGE_INPUT接收到格式化后的消息：" + message);
-    }
+    }*/
 }

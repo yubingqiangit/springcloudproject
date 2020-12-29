@@ -3,8 +3,12 @@ package com.yu.controller;
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.yu.config.AlipayConfig;
+import com.yu.rebbitmqConfig.MyProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,15 +24,16 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/alipay")
+@EnableBinding(value = {MyProcessor.class})
 public class CallBackController {
-
+    @Autowired
+    private MyProcessor myProcessor;
     private static final Logger logger = LoggerFactory.getLogger(CallBackController.class);
 
     @RequestMapping(value = "/callback")
     @ResponseBody
     public void alipayReturnNotice(HttpServletRequest request, HttpServletRequest response) throws Exception {
         System.out.println("支付成功, 进入同步通知接口...");
-        //获取支付宝GET过来反馈信息
         Map<String,String> params = new HashMap<String,String>();
         Map<String,String[]> requestParams = request.getParameterMap();
         logger.info("异步回调报文："+ requestParams);
@@ -45,13 +50,13 @@ public class CallBackController {
             logger.info("name:{}value:{}",name,valueStr);
             params.put(name, valueStr);
         }
+        //验签时要将sign_type移除，否则验签失败
         params.remove("sign_type");
         logger.info("报文=========" + JSON.toJSONString(params));
         //验签
        // boolean signVerified = AlipaySignature.rsaCheckV2(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //璋冪敤SDK楠岃瘉绛惧悕
         boolean verify_result = AlipaySignature.rsaCheckV2(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, "RSA2");
         logger.info("验签结果："+verify_result);
-        //ModelAndView mv = new ModelAndView("index");
         if(verify_result) {
             //商户订单号
             String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
@@ -60,6 +65,13 @@ public class CallBackController {
             //付款金额
             String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
             logger.info("验签成功out_trade_no::{}trade_no::{}total_amount::{}",out_trade_no,trade_no,total_amount);
+
+            //发送支付完成mq消息
+            logger.info("modelOutput message::{}",out_trade_no);
+            Message<String> stringMessage = org.springframework.messaging.support.MessageBuilder.withPayload(out_trade_no).build();
+            logger.info("modelOutput rabbitMq stringMessage::{}",stringMessage);
+            boolean send = myProcessor.modelOutput().send(stringMessage);
+            System.out.println("支付结果MQ send result::" + send);
         }else {
             System.out.println("验签失败......");
         }

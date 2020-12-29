@@ -16,10 +16,10 @@ spring:
 #          destination: kite.log.messages
 #          binder: local_rabbit
 #          group: logConsumer-group1
-        log_format_input:
-          destination: kite.log.format.messages
-          binder: local_rabbit
-          group: logFormat-group1
+#        log_format_input:
+#          destination: kite.log.format.messages
+#          binder: local_rabbit
+#          group: logFormat-group1
 #        log_format_output:
 #          destination: kite.log.format.messages
 #          binder: local_rabbit

@@ -10,6 +10,17 @@
         <result column="rel_time" property="relTime"/>
         <result column="server_type" property="serverType"/>
     </resultMap>
+    <resultMap id ="payMap" type="com.yu.vo.PayPay">
+        <result property="id" column="id"/>
+        <result column="amount" property="amount"/>
+        <result column="orderNo" property="orderNo"/>
+        <result column="state" property="state"/>
+        <result column="common" property="common"/>
+    </resultMap>
+
+    <insert id="createPay" parameterType="com.yu.model.PayReqItem">
+        insert into pay_pay (amount,orderNo,state,common) values(#{amount}, #{orderNo},15,15)
+    </insert>
 
     <select id = "getModelStakeRelById"  resultMap="ModelStakeRelMap">
        select * from pc_model_stake_rel where id = #{id}

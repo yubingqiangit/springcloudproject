@@ -7,6 +7,7 @@ package com.yu.controller;/**
 
 import com.alibaba.fastjson.JSON;
 import com.yu.common.CommonResult;
+import com.yu.dao.ModelMapper;
 import com.yu.model.PayReqItem;
 import com.yu.model.PayRespItem;
 import com.yu.service.AlipayService;
@@ -30,7 +31,8 @@ public class PayController {
 
     @Autowired
     AlipayService alipayService;
-
+    @Autowired
+    private ModelMapper modelMapper;
 
     /**
      * post请求
@@ -44,6 +46,9 @@ public class PayController {
             logger.info("收到支付请求:{}", JSON.toJSONString(payReqItem));
             String result = alipayService.aliPay(payReqItem);
             logger.info("支付宝返回form标签:{}",result);
+            //创建支付预下单
+            int pay = modelMapper.createPay(payReqItem);
+            logger.info("创建支付预下单成功....");
             PayRespItem payRespItem = new PayRespItem();
             payRespItem.setOrderNo(payReqItem.getOrderNo());
             payRespItem.setStatus("success");
