@@ -47,10 +47,12 @@ public class PayController {
     public CommonResult<PayRespItem> payMent(@RequestBody PayReqItem payReqItem) {
         try {
             logger.info("收到支付请求:{}", JSON.toJSONString(payReqItem));
-            alipayService.aliPay(payReqItem);
+            String result = alipayService.aliPay(payReqItem);
+            logger.info("支付宝返回form标签:{}",result);
             PayRespItem payRespItem = new PayRespItem();
             payRespItem.setOrderNo(payReqItem.getOrderNo());
             payRespItem.setStatus("success");
+            payRespItem.setResult(result);
             return new CommonResult<>(payRespItem);
         } catch (IOException e) {
             logger.error(e.getMessage());

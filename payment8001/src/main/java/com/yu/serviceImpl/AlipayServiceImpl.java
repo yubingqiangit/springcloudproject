@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * TODO 
@@ -30,7 +29,7 @@ public class AlipayServiceImpl  implements AlipayService {
      * @throws IOException
      */
     @Override
-    public void aliPay(PayReqItem payReqItem) throws IOException {
+    public String aliPay(PayReqItem payReqItem) throws IOException {
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
         //设置请求参数
@@ -54,6 +53,7 @@ public class AlipayServiceImpl  implements AlipayService {
         }
         //输出
         log.info("返回结果={}",result);
+        return result;
     }
 
     @Override

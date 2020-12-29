@@ -6,6 +6,7 @@ import com.yu.feign.FeignService;
 import com.yu.model.ModelStakeRel;
 import com.yu.model.PayReqItem;
 import com.yu.model.PayRespItem;
+import com.yu.utils.OrderNoRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,10 +31,15 @@ public class PayController {
     private FeignService feignService;
 
     @RequestMapping(value = "/payment/center/pay")
-    public CommonResult<PayRespItem> pay(HttpServletResponse response, HttpServletRequest request) {
-        logger.info("method pay orderNo:{}amount:{}", request.getParameter("orderNo"),request.getParameter("amount"));
-        CommonResult<PayRespItem> payRespItemCommonResult = feignService.payGet(request.getParameter("orderNo"),request.getParameter("amount"));
+    public String pay(HttpServletResponse response, HttpServletRequest request) {
+        String no = OrderNoRandom.getNo();
+        logger.info("method pay orderNo:{}amount:{}", no,request.getParameter("amount"));
+        PayReqItem payReqItem = new PayReqItem();
+        payReqItem.setAmount(request.getParameter("amount"));
+        payReqItem.setOrderNo(no);
+        logger.info("请求支付中心参数payItem:{}",JSON.toJSONString(payReqItem));
+        CommonResult<PayRespItem> payRespItemCommonResult = feignService.pay(payReqItem);
         logger.info("response model::{}", JSON.toJSON(payRespItemCommonResult));
-        return payRespItemCommonResult;
+        return payRespItemCommonResult.getData().getResult();
     }
 }

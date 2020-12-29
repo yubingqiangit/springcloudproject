@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>支付宝手机网站支付接口2.0</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style>
         *{
@@ -139,7 +138,6 @@
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
 <header class="am-header">
-    <h1>支付宝手机网站支付2.0接口</h1>
 </header>
 <script type="text/javascript">
     var xmlhttp;
@@ -150,8 +148,8 @@
     function send(arg) {
         CreateXMLHttpRequest();
         xmlhttp.onreadystatechange = callhandle;
-        //xmlhttp.open("GET","Default.aspx?goback=yes&arg=" + arg,true);
-        xmlhttp.open("POST", "/payment/pay?amount=" + arg, true);
+        //xmlhttp.open("POST", "/payment/pay?amount=" + arg, true);
+        xmlhttp.open("POST", "/payment/center/pay?amount=" + arg, true);
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");  //用POST的时候一定要有这句
         xmlhttp.send("");
     }
@@ -168,7 +166,7 @@
     function callhandle() {
         if (xmlhttp.readyState == 4) {
             if (xmlhttp.status == 200) {
-               // alert("支付宝返回："+xmlhttp.responseText);
+                //alert("支付宝返回："+xmlhttp.responseText);
                 // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
                 let divForm = document.getElementsByTagName('divform')
                 if (divForm.length) {
@@ -185,15 +183,14 @@
 </script>
 <div class="panel" style="clear:left">
     <div class="row-title">
-        <i></i><span class="color1">支付金额</span>
     </div>
     <div class="pannel-body">
-        <div class="from-group">
-            <input type="hidden" id="clientId" name="clientId" value="${clientId}">
+        <div class="new-btn-login">
             <label fro="username">
-                <span class="error">*</span>支付金额：
+                <span >支付金额：</span>
+                <span ><input type="text" name="amount" id="amountid" width="200" class="new-btn-login"></span>
             </label>
-            <input type="text" name="amount" id="amountid" class="form-control">
+
         </div>
     </div>
 </div>
@@ -203,7 +200,7 @@
             <dt></dt>
             <dd id="btn-dd">
                         <span class="new-btn-login-sp">
-                            <button onclick="myfunction()" class="new-btn-login" style="text-align:center;">测试支付</button>
+                            <button onclick="myfunction()" class="new-btn-login" style="text-align:center;">支付</button>
                         </span>
             </dd>
         </dl>

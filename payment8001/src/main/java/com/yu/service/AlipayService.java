@@ -18,7 +18,7 @@ public interface AlipayService {
      * @param payReqItem
      * @throws IOException
      */
-    void  aliPay(PayReqItem payReqItem) throws IOException;
+    String  aliPay(PayReqItem payReqItem) throws IOException;
 
     void  aliPay(String orderNo,String amount) throws IOException;
 }

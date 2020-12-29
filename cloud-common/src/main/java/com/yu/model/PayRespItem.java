@@ -9,6 +9,15 @@ package com.yu.model;
 public class PayRespItem {
     private String orderNo;
     private String status;
+    private String result;  //支付宝返回form
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
 
     public String getOrderNo() {
         return orderNo;
