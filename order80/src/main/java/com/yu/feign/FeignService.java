@@ -73,6 +73,19 @@ public interface FeignService {
     @RequestMapping(value = "/payment/payget/{orderNo}/{amount}",method = RequestMethod.GET)
     public CommonResult<PayRespItem> payGet(@PathVariable("orderNo") String orderNo,@PathVariable("amount")String amount);
 
+    /**
+     * 生成字符串App预下单支付
+     * @param payItem
+     * @return
+     */
+    @RequestMapping(value = "/payment/app/str")
+    public CommonResult<String> qrStr(@RequestBody PayReqItem payItem);
 
-
+    /**
+     * 生成二维码
+     * @param payItem
+     * @return
+     */
+    @RequestMapping(value = "/payment/create/qrcode")
+    public CommonResult<String> createQrCode(@RequestBody PayReqItem payItem);
 }

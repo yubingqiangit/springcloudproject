@@ -75,6 +75,28 @@ public class  FeignHystrixFallBackImpl implements FeignService, HttpFeignGetServ
         return  new CommonResult<PayRespItem>(405,"method pay openfeign hystrix error.");
     }
 
+    /**
+     * App预下单支付
+     * @param payItem
+     * @return
+     */
+    @Override
+    public CommonResult<String> qrStr(PayReqItem payItem) {
+        System.out.println("************************openfeign-hystrix-pay****************************");
+        return  new CommonResult<String>(405,"method qrStr openfeign hystrix error.");
+    }
+
+    /**
+     * 生成二维码
+     * @param payItem
+     * @return
+     */
+    @Override
+    public CommonResult<String> createQrCode(PayReqItem payItem) {
+        System.out.println("************************openfeign-hystrix-pay****************************");
+        return  new CommonResult<String>(405,"method createQrCode openfeign hystrix error.");
+    }
+
 
     @Override
     public List<String> getAllUrl() {

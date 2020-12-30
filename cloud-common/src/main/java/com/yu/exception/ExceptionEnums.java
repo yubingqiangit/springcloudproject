@@ -10,7 +10,8 @@ public enum ExceptionEnums {
 
 MODEL_NOT_FOUND("model not found error.",2001),
 MODEL_LIST_IS_EMPTY("model list is empty error.",2002),
-REQUEST_REUSE("重复请求.",600);
+REQUEST_REUSE("重复请求.",600),
+ERROR("查询失败.",700);
 
 
 

@@ -1,6 +1,12 @@
 package com.yu.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.yu.common.CommonResult;
 import com.yu.feign.FeignService;
 import com.yu.model.PayReqItem;
@@ -43,5 +49,39 @@ public class PayController {
         CommonResult<PayRespItem> payRespItemCommonResult = feignService.pay(payReqItem);
         logger.info("response model::{}", JSON.toJSON(payRespItemCommonResult));
         return payRespItemCommonResult.getData().getResult();
+    }
+
+
+    /**
+     * 生成app支付获取签名串
+     * @return
+     */
+    @RequestMapping(value = "/app/getStr")
+    public String getAppStr(HttpServletResponse response, HttpServletRequest request) {
+        String amount = request.getParameter("amount");
+        String no = OrderNoRandom.getNo();
+        logger.info("getAppStr 支付金额：{}流水号：{}", amount,no);
+        PayReqItem payReqItem = new PayReqItem();
+        payReqItem.setAmount(amount);
+        payReqItem.setOrderNo(no);
+        CommonResult<String> stringCommonResult = feignService.qrStr(payReqItem);
+        logger.info("stringCommonResult===" + JSON.toJSONString(stringCommonResult));
+        logger.info("获取二维码字符串：{}", stringCommonResult.getMessage());
+        return stringCommonResult.getMessage();
+    }
+
+
+    @RequestMapping(value = "/create/qrCode")
+    public String createQrCode(HttpServletResponse response, HttpServletRequest request) {
+        String amount = request.getParameter("amount");
+        String no = OrderNoRandom.getNo();
+        logger.info("createQrCode 支付金额：{}流水号：{}", amount,no);
+        PayReqItem payReqItem = new PayReqItem();
+        payReqItem.setAmount(amount);
+        payReqItem.setOrderNo(no);
+        CommonResult<String> stringCommonResult = feignService.createQrCode(payReqItem);
+        logger.info("stringCommonResult===" + JSON.toJSONString(stringCommonResult));
+        logger.info("生成二维码结果：{}", stringCommonResult.getMessage());
+        return stringCommonResult.getMessage();
     }
 }

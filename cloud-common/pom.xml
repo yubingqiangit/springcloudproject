@@ -14,13 +14,44 @@
     <dependencies>
 
         <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
             <version>4.8.10.ALL</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.11.0.ALL</version>
+        </dependency>
+
+        <dependency>
+            <groupId>zfb.qrcode</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>zfb.qrcode</groupId>
+            <artifactId>QRCode</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>zfb.qrcode</groupId>
+            <artifactId>zxing</artifactId>
+            <version>3.2.1</version>
         </dependency>
 
 
+
+
+        <!--pom.xml  支付宝sdk -->
+        <!--<dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-easysdk</artifactId>
+            <version>2.0.2</version>
+        </dependency>-->
 
         <!--集成rebbitMq-->
         <dependency>
