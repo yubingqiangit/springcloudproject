@@ -7,8 +7,10 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.yu.config.AlipayConfig;
 import com.yu.model.PayReqItem;
 import com.yu.service.AlipayService;
+import com.yu.utils.AliPayClientUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,6 +26,9 @@ public class AlipayServiceImpl implements AlipayService {
 
     private static final Logger log = LoggerFactory.getLogger(AlipayServiceImpl.class);
 
+    @Autowired
+    AlipayConfig alipayConfig;
+
     /**
      * 支付宝支付调用接口
      * @throws IOException
@@ -31,11 +36,12 @@ public class AlipayServiceImpl implements AlipayService {
     @Override
     public String aliPay(PayReqItem payReqItem) throws IOException {
         //获得初始化的AlipayClient
-        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+        AlipayClient alipayClient = AliPayClientUtils.getInstance().initAlipayClient(alipayConfig);
+        //AlipayClient alipayClient = new DefaultAlipayClient(alipayConfig.gatewayUrl, alipayConfig.app_id, alipayConfig.merchant_private_key, "json", alipayConfig.charset, alipayConfig.alipay_public_key, alipayConfig.sign_type);
         //设置请求参数
         AlipayTradePagePayRequest aliPayRequest = new AlipayTradePagePayRequest();
-        aliPayRequest.setReturnUrl(AlipayConfig.return_url); //支付宝回调地址
-        aliPayRequest.setNotifyUrl(AlipayConfig.notify_url);
+        aliPayRequest.setReturnUrl(alipayConfig.return_url); //支付宝回调地址
+        aliPayRequest.setNotifyUrl(alipayConfig.notify_url);
 
         //付款金额，从前台获取，必填
         //订单名称，必填
@@ -59,11 +65,12 @@ public class AlipayServiceImpl implements AlipayService {
     @Override
     public void aliPay(String orderNo,String amount) throws IOException {
         //获得初始化的AlipayClient
-        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+        AlipayClient alipayClient = AliPayClientUtils.getInstance().initAlipayClient(alipayConfig);
+        //AlipayClient alipayClient = new DefaultAlipayClient(alipayConfig.gatewayUrl, alipayConfig.app_id, alipayConfig.merchant_private_key, "json", alipayConfig.charset, alipayConfig.alipay_public_key, alipayConfig.sign_type);
         //设置请求参数
         AlipayTradePagePayRequest aliPayRequest = new AlipayTradePagePayRequest();
-        aliPayRequest.setReturnUrl(AlipayConfig.return_url); //支付宝回调地址
-        aliPayRequest.setNotifyUrl(AlipayConfig.notify_url);
+        aliPayRequest.setReturnUrl(alipayConfig.return_url); //支付宝回调地址
+        aliPayRequest.setNotifyUrl(alipayConfig.notify_url);
 
         //付款金额，从前台获取，必填
         //订单名称，必填

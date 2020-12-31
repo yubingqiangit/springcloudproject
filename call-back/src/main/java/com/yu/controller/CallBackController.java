@@ -30,6 +30,9 @@ public class CallBackController {
     private MyProcessor myProcessor;
     private static final Logger logger = LoggerFactory.getLogger(CallBackController.class);
 
+    @Autowired
+    AlipayConfig alipayConfig;
+
     @RequestMapping(value = "/callback")
     @ResponseBody
     public void alipayReturnNotice(HttpServletRequest request, HttpServletRequest response) throws Exception {
@@ -55,7 +58,7 @@ public class CallBackController {
         logger.info("报文=========" + JSON.toJSONString(params));
         //验签
        // boolean signVerified = AlipaySignature.rsaCheckV2(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //璋冪敤SDK楠岃瘉绛惧悕
-        boolean verify_result = AlipaySignature.rsaCheckV2(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, "RSA2");
+        boolean verify_result = AlipaySignature.rsaCheckV2(params, alipayConfig.alipay_public_key, alipayConfig.charset, "RSA2");
         logger.info("验签结果："+verify_result);
         if(verify_result) {
             //商户订单号

@@ -35,6 +35,7 @@ import com.yu.exception.ExceptionEnums;
 import com.yu.model.PayReqItem;
 import com.yu.model.PayRespItem;
 import com.yu.service.AlipayService;
+import com.yu.utils.AliPayClientUtils;
 import com.yu.utils.OrderNoRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,10 @@ public class PayController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private AlipayConfig alipayConfig;
+
     /**
      * post请求
      * @param payReqItem
@@ -119,7 +124,8 @@ public class PayController {
      */
     @RequestMapping(value = "/query",method = RequestMethod.POST)
     public CommonResult<String> query(@RequestBody PayReqItem payReqItem) throws AlipayApiException {
-        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+        AlipayClient alipayClient = AliPayClientUtils.getInstance().initAlipayClient(alipayConfig);
+       // AlipayClient alipayClient = new DefaultAlipayClient(alipayConfig.gatewayUrl, alipayConfig.app_id, alipayConfig.merchant_private_key, "json", alipayConfig.charset, alipayConfig.alipay_public_key, alipayConfig.sign_type);
         AlipayTradeQueryRequest  request = new AlipayTradeQueryRequest();
         request.setBizContent("{" +
                 "\"out_trade_no\":\""+payReqItem.getOrderNo()+"\"," +
@@ -145,17 +151,9 @@ public class PayController {
      */
     @RequestMapping(value = "/app/str",method = RequestMethod.POST)
     public CommonResult<String> getAppStr(@RequestBody PayReqItem payReqItem) {
-        String APP_ID="2021000116682104";
-        String APP_PRIVATE_KEY="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDKyuEGNQ7vIsuK8oyiu7+ahwJ2tvWaZTrB+cttDs4MjQvANpppALNrHNahbkAga52tuswAYimVVpAjAFFridiCg34017hfwQHAw2SgFVBamjB1NCmrYkwEyJGaY7InP4yThWwTG9p4I4bLgTz7Yj5xvXKIy0pl1hStqtO1WKGBU+Q9tJ+4y2PEpSys7iE9ZSbN0zLxqJzSJ0W76s3uckx7MmovYleiXkxu9zBkcfY1924cqzjiBRDQBVhCAnpiYMhcQwDF9spbqZb8kyPKH+Oc25S2wJeEdlBO3+CF3LfBdR/GsJuPphpwLF0Owrxg8OPAS9eRbwhJWz+R5tOkUEX3AgMBAAECggEBAIPpMDKfdNVs5sW9PGnmgp370Eh0fpIt4uimmgKYrMNRRCGF4y8GO68jFSHw21m7ZtfJOEXPlIkFw8BgxpWTFvjem8u3vsDahU9kSiIvexNUVM0IX0qSKCy8Yqnwy8Pn/INBOKm9ZoDbayUZLhe/Mis+NjBxPDW96bmF8yx1OKksReQ+rx8O/L92csvOinZMJplKc0frmsqBOeSirl+kTDDMVeL1qndiBBGWhZ+D8x/3GgOc54qFAU9UdbBVTXrsFppgPBYJQ1aZexWWeuJKxc5gN1d/TRKLpExe/pgV0x3nOrB6DNzoxQl2I7wMkxa7bIT3XRFI71yasvfHsLE7RrECgYEA8GESuWeBAaHeSRNlIj/Obvrk6Hx9hnVHla9N+3PJXWUIdOu/2VKyFfSn6ll6A6bnhAttgMg7gRMLIHnT0ycTBBkLnfLXEbuVzRR7yA3YZ6WzfraJpBqJHULqWJmFTZzgqGldm3HGyEnwS2w0lqvFNSHkKEYDALMgvCi3K7gPurUCgYEA1/iEVYXMjWgFb/BWdHuGeYeeq8ZswWnCwJ/U54Hcr/pPDcgQL+bLsfVQ2ginMsEn5ijiRxM25HgQRlVt/y6QPBAPMlyGoR82sU2UwVmj+aJymYP88AQJ6TgdAMnhn0c3M9s2Q4NKKj/q64NZwF5nrZuJBnMapNEUKrxdndpI7XsCgYEAzBuhKo0Ynao0dRhi55IGV3XyqPYMH/+1qQQR01Gdyg/f/mevn3j4fmwfqH4RfMhcDWMmuBNNc2wYJptLoh+rpe8eTh/FPulpaZnbASPAfUHWB+I3PYDKrG4FTvYMmrp6iIXvVe5mO+uMfn6CqO1xpowAj7HjGtT/FsX7wsOnl4ECgYBl+5lp1SOxhnRC1qfMm2P10V/Q14MVlf57/T2JEJ6Ijtdzt4xFQmPfperG+p0Rb3qKybWIQH+ERVnSDJdDj9ZWNnMmoeCFBvtJoEvlPZIb2GTrLxNqt02CzpeLfslG8FcV6qbmHIISD1q8WasxFqM4rKB45jOnrn8qawZ9+szDLwKBgEHMPkXFPWp/6XgjSOD66M7saY1JBCjwJ4UkwgU+jFIBIWs7GC1POtQEErnzN2FCGQkC83C8A4w8dBx2UJw8V+mNgdeWE2dda259R0pYF4MDe5JOzFCYitP0YoqG81tx0TtsNFfodBbQ5z937Q2XVN++DqAUk1Y/g4QISdm5gTaS";
-        String ALIPAY_PUBLIC_KEY="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1ri3uNj3HiQ+rUxhHRJknuSx0FrkSFLkHXqyT5MmlGpIiZ4dVRfNRkp7f27ptmgzy6xBs0jKRPh381Oa4ydqjaDIeSZ+jxWCKsyYRZh3+cPzL91pb/XjCA3khIU6Vgp3IEKRMGq9VsONvqehu1BZeA5INW56Lh4bd8tV/pfPvy+w8MIniRbdsRleFKOSE6AdvljecJH5wzFT4GtsLRsaPG1QgWhJ7d1MnbiZzGSJNyVaGoCa175JC1c72mkdHp0s2/ClEAzlJfcwU78UC9pvBKL3763sNT6hDAibYlWwYjAcGJ0teKc6uaJmG53b7t8QbFQKq0EXQaD//FK8jjXIQIDAQAB";
-        //签名方式
-        String sign_type="RSA2";
-        //编码格式
-        String CHARSET="utf-8";
-        //正式环境支付宝网关，如果是沙箱环境需更改成https://openapi.alipaydev.com/gateway.do
-        String url="https://openapi.alipaydev.com/gateway.do";
         //实例化客户端
-        AlipayClient alipayClient = new DefaultAlipayClient(url, APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY,sign_type);
+        AlipayClient alipayClient = AliPayClientUtils.getInstance().initAlipayClient(alipayConfig);
+        //AlipayClient alipayClient = new DefaultAlipayClient(url, APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY,sign_type);
         //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
         AlipayTradeAppPayRequest alirequest = new AlipayTradeAppPayRequest();
         //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
@@ -189,20 +187,8 @@ public class PayController {
      */
     @RequestMapping(value = "/create/qrcode",method = RequestMethod.POST)
     public CommonResult<String> qrCode(@RequestBody PayReqItem payReqItem) {
-        // TODO Auto-generated method stub
-        String APP_ID="2021000116682104";
-        String APP_PRIVATE_KEY="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDKyuEGNQ7vIsuK8oyiu7+ahwJ2tvWaZTrB+cttDs4MjQvANpppALNrHNahbkAga52tuswAYimVVpAjAFFridiCg34017hfwQHAw2SgFVBamjB1NCmrYkwEyJGaY7InP4yThWwTG9p4I4bLgTz7Yj5xvXKIy0pl1hStqtO1WKGBU+Q9tJ+4y2PEpSys7iE9ZSbN0zLxqJzSJ0W76s3uckx7MmovYleiXkxu9zBkcfY1924cqzjiBRDQBVhCAnpiYMhcQwDF9spbqZb8kyPKH+Oc25S2wJeEdlBO3+CF3LfBdR/GsJuPphpwLF0Owrxg8OPAS9eRbwhJWz+R5tOkUEX3AgMBAAECggEBAIPpMDKfdNVs5sW9PGnmgp370Eh0fpIt4uimmgKYrMNRRCGF4y8GO68jFSHw21m7ZtfJOEXPlIkFw8BgxpWTFvjem8u3vsDahU9kSiIvexNUVM0IX0qSKCy8Yqnwy8Pn/INBOKm9ZoDbayUZLhe/Mis+NjBxPDW96bmF8yx1OKksReQ+rx8O/L92csvOinZMJplKc0frmsqBOeSirl+kTDDMVeL1qndiBBGWhZ+D8x/3GgOc54qFAU9UdbBVTXrsFppgPBYJQ1aZexWWeuJKxc5gN1d/TRKLpExe/pgV0x3nOrB6DNzoxQl2I7wMkxa7bIT3XRFI71yasvfHsLE7RrECgYEA8GESuWeBAaHeSRNlIj/Obvrk6Hx9hnVHla9N+3PJXWUIdOu/2VKyFfSn6ll6A6bnhAttgMg7gRMLIHnT0ycTBBkLnfLXEbuVzRR7yA3YZ6WzfraJpBqJHULqWJmFTZzgqGldm3HGyEnwS2w0lqvFNSHkKEYDALMgvCi3K7gPurUCgYEA1/iEVYXMjWgFb/BWdHuGeYeeq8ZswWnCwJ/U54Hcr/pPDcgQL+bLsfVQ2ginMsEn5ijiRxM25HgQRlVt/y6QPBAPMlyGoR82sU2UwVmj+aJymYP88AQJ6TgdAMnhn0c3M9s2Q4NKKj/q64NZwF5nrZuJBnMapNEUKrxdndpI7XsCgYEAzBuhKo0Ynao0dRhi55IGV3XyqPYMH/+1qQQR01Gdyg/f/mevn3j4fmwfqH4RfMhcDWMmuBNNc2wYJptLoh+rpe8eTh/FPulpaZnbASPAfUHWB+I3PYDKrG4FTvYMmrp6iIXvVe5mO+uMfn6CqO1xpowAj7HjGtT/FsX7wsOnl4ECgYBl+5lp1SOxhnRC1qfMm2P10V/Q14MVlf57/T2JEJ6Ijtdzt4xFQmPfperG+p0Rb3qKybWIQH+ERVnSDJdDj9ZWNnMmoeCFBvtJoEvlPZIb2GTrLxNqt02CzpeLfslG8FcV6qbmHIISD1q8WasxFqM4rKB45jOnrn8qawZ9+szDLwKBgEHMPkXFPWp/6XgjSOD66M7saY1JBCjwJ4UkwgU+jFIBIWs7GC1POtQEErnzN2FCGQkC83C8A4w8dBx2UJw8V+mNgdeWE2dda259R0pYF4MDe5JOzFCYitP0YoqG81tx0TtsNFfodBbQ5z937Q2XVN++DqAUk1Y/g4QISdm5gTaS";
-        String ALIPAY_PUBLIC_KEY="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1ri3uNj3HiQ+rUxhHRJknuSx0FrkSFLkHXqyT5MmlGpIiZ4dVRfNRkp7f27ptmgzy6xBs0jKRPh381Oa4ydqjaDIeSZ+jxWCKsyYRZh3+cPzL91pb/XjCA3khIU6Vgp3IEKRMGq9VsONvqehu1BZeA5INW56Lh4bd8tV/pfPvy+w8MIniRbdsRleFKOSE6AdvljecJH5wzFT4GtsLRsaPG1QgWhJ7d1MnbiZzGSJNyVaGoCa175JC1c72mkdHp0s2/ClEAzlJfcwU78UC9pvBKL3763sNT6hDAibYlWwYjAcGJ0teKc6uaJmG53b7t8QbFQKq0EXQaD//FK8jjXIQIDAQAB";
-        //签名方式
-        String sign_type="RSA2";
-        //编码格式
-        String CHARSET="utf-8";
-        //正式环境支付宝网关，如果是沙箱环境需更改成https://openapi.alipaydev.com/gateway.do
-        String url="https://openapi.alipaydev.com/gateway.do";
-        //实例化客户端
-
-        System.out.println(APP_ID + "|" + APP_PRIVATE_KEY);
-        AlipayClient alipayClient = new DefaultAlipayClient(url, APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY,sign_type);
+        AlipayClient alipayClient = AliPayClientUtils.getInstance().initAlipayClient(alipayConfig);
+        //AlipayClient alipayClient = new DefaultAlipayClient(url, APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY,sign_type);
         //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。

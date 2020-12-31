@@ -8,12 +8,14 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.yu.common.CommonResult;
+import com.yu.config.AlipayConfig;
 import com.yu.feign.FeignService;
 import com.yu.model.PayReqItem;
 import com.yu.model.PayRespItem;
 import com.yu.utils.OrderNoRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
@@ -31,6 +33,7 @@ public class PayController {
     private Logger logger = LoggerFactory.getLogger(PayController.class);
     @Resource
     private FeignService feignService;
+
 
     /**
      * 模拟订单中心通过feign调支付中心实现支付预下单

@@ -1,13 +1,70 @@
 package com.yu.config;
+
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /**
- * TODO 
+ * 支付宝请求配置类
  * @version 1.0
  * @author yubingqian
  * @date 2020/12/25 10:54 
  */
+@Data
+@Component
 public class AlipayConfig {
 
     // 作为身份标识的应用ID
+    @Value("${app_id}")
+    public String app_id;
+
+    // 商户私钥，您的PKCS8格式RSA2私钥
+    @Value("${merchant_private_key}")
+    public String merchant_private_key;
+
+    // 支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
+    @Value("${alipay_public_key}")
+    public String alipay_public_key;
+
+    // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+    @Value("${notify_url}")
+    public String notify_url;
+
+    // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+    @Value("${return_url}")
+    public String return_url;
+
+    // 签名方式
+    @Value("${sign_type}")
+    public String sign_type;
+
+    // 字符编码格式
+    @Value("${charset}")
+    public String charset;
+
+    // 支付宝网关https://openapi.alipay.com/gateway.do
+    @Value("${gatewayUrl}")
+    public String gatewayUrl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* // 作为身份标识的应用ID
     public static String app_id = "2021000116682104";
 
     // 商户私钥，您的PKCS8格式RSA2私钥
@@ -28,5 +85,5 @@ public class AlipayConfig {
     public static String charset = "UTF-8";
 
     // 支付宝网关https://openapi.alipay.com/gateway.do
-    public static String gatewayUrl = "https://openapi.alipaydev.com/gateway.do";
+    public static String gatewayUrl = "https://openapi.alipaydev.com/gateway.do";*/
 }
