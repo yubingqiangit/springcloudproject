@@ -34,7 +34,7 @@ public class AliPayClientUtils {
     public AlipayClient initAlipayClient(AlipayConfig alipayConfig) {
         System.out.println("Config::" + JSON.toJSONString(alipayConfig));
         if (alipayClient == null) {
-            alipayClient  =  new DefaultAlipayClient(alipayConfig.gatewayUrl, alipayConfig.app_id, alipayConfig.merchant_private_key, "json", alipayConfig.charset, alipayConfig.alipay_public_key, alipayConfig.sign_type);;
+            alipayClient  =  new DefaultAlipayClient(alipayConfig.gatewayUrl, alipayConfig.app_id, alipayConfig.merchant_private_key, "json", alipayConfig.charset, alipayConfig.alipay_public_key, alipayConfig.sign_type);
             logger.info("==============AlipayClient初始化成功====================");
         }
         return alipayClient;

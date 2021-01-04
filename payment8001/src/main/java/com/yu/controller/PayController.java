@@ -166,7 +166,7 @@ public class PayController {
         model.setTotalAmount(payReqItem.getAmount());
         model.setProductCode("QUICK_MSECURITY_PAY");
         alirequest.setBizModel(model);
-        alirequest.setNotifyUrl("http://haha.vaiwan.com/alipay/callback");
+        alirequest.setNotifyUrl(alipayConfig.notify_url);
         try {
             //这里和普通的接口调用不同，使用的是sdkExecute
             AlipayTradeAppPayResponse aliresponse = alipayClient.sdkExecute(alirequest);
@@ -201,7 +201,7 @@ public class PayController {
         model.setTotalAmount(payReqItem.getAmount());
         model.setProductCode("QUICK_MSECURITY_PAY");
         request.setBizModel(model);
-        request.setNotifyUrl("http://haha.vaiwan.com/alipay/callback");
+        request.setNotifyUrl(alipayConfig.notify_url);
         //这里和普通的接口调用不同，使用的是sdkExecute
         AlipayTradeAppPayResponse response = null;
         try {
@@ -264,7 +264,7 @@ public class PayController {
         model.setTotalAmount("0.01");
         model.setProductCode("QUICK_MSECURITY_PAY");
         request.setBizModel(model);
-        request.setNotifyUrl("http://haha.vaiwan.com/alipay/callback");
+        request.setNotifyUrl("http://zfb.vaiwan.com/alipay/callback");
         //这里和普通的接口调用不同，使用的是sdkExecute
         AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
         System.out.println(response.getBody());//就是orderString 可以直接给客户端请求，无需再做处理。
