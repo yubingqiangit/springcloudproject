@@ -11,6 +11,12 @@ spring:
   cloud:    ##mq消息生产者配置
     stream:
       bindings:
+        #        input:
+        #          destination: default.messages
+        #          binder: local_rabbit
+        #        output:
+        #          destination: default.messages
+        #          binder: local_rabbit
         log_format_output:
           destination: kite.log.format.messages
           binder: local_rabbit
@@ -37,27 +43,9 @@ spring:
                 port: 5672
                 username: admin
                 password: admin
-#  cloud:
-#    stream:
-#      bindings:
-#        input:
-#          destination: default.messages
-#          binder: local_rabbit
-#        output:
-#          destination: default.messages
-#          binder: local_rabbit
-#      binders:
-#        local_rabbit:
-#          type: rabbit
-#          environment:
-#            spring:
-#              rabbitmq:
-#                host: localhost
-#                port: 5672
-#                username: admin
-#                password: admin
   main:
     allow-bean-definition-overriding: true
+
 #    security:
 #    basic:
 #      enabled: true               # 开启基于HTTP basic的认证
@@ -71,6 +59,7 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+
 #  thymeleaf:
 #    cache: true
 #    encoding: UTF-8
@@ -84,8 +73,6 @@ lock:
 server:
   port: 80
 
-# thymeleaf
-
 eureka:
   client:
     service-url:
@@ -93,27 +80,34 @@ eureka:
 #      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
 
 ### 针对单个服务的 Ribbon 配置
-
-### 针对单个服务的 Ribbon 配置
 CLOUD-PAYMENT-SERVICE:  #服务提供名称
   ribbon:
     # 基于配置文件形式的 针对单个服务的 Ribbon 负载均衡策略
-    #NFLoadBalancerRuleClassName: com.lb.LoadBalancerConfig  #自定义负载均衡策略
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule   #轮询策略
-
+    NFLoadBalancerRuleClassName: com.lb.LoadBalancerConfig  #自定义负载均衡策略
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule   #轮询策略
+    ReadTimeout: 8000   #负载均衡超时时间，默认值8000
+    ConnectTimeout: 6000  #ribbon请求连接的超时时间，默认值6000
+#ribbon设置的超时时间要大于断路器设置的超时时间，否则断路器设置将没有意义
 feign:
   hystrix:
-    command:
-      default:
-        execution:
-          isolation:
-            thread:
-              timeoutInMilliseconds: 6000 #默认的连接超时时间1秒,若1秒没有返回数据,自动的触发降级逻辑
-        circuitBreaker:
-          enabled: true
-          requestVolumeThreshold: 5
-          errorThresholdPercentage: 10
-          sleepWindowInMilliseconds: 10000
+    # feign熔断器开关
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            #断路器的超时时间ms,默认1000
+            timeoutInMilliseconds: 6000
+      circuitBreaker:
+        #当在配置时间窗口内达到此数量的失败后，进行短路
+        requestVolumeThreshold: 20
+        #出错百分比阈值，当达到此阈值后，开始短路。默认50%）
+        errorThresholdPercentage: 50%
+        #短路多久以后开始尝试是否恢复，默认5s）-单位ms
+        sleepWindowInMilliseconds: 500
 
 #  在被监控的服务上添加暴露点
 management:

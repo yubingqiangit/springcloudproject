@@ -40,9 +40,9 @@ public class RestTemplateConfig {
      * 也可以自定义负载均衡策略的类
      * @return
      */
-    @Bean
+   /* @Bean
     public IRule ribbonRule() {
        // return new RandomRule(); 随机策略
         return new LoadBalancerConfig();
-    }
+    }*/
 }
