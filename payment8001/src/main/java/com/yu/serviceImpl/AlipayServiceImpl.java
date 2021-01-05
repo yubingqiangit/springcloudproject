@@ -1,5 +1,6 @@
 package com.yu.serviceImpl;
 
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -36,8 +37,9 @@ public class AlipayServiceImpl  implements AlipayService {
     @Override
     public String aliPay(PayReqItem payReqItem) throws IOException {
         //获得初始化的AlipayClient
-        AlipayClient alipayClient = AliPayClientUtils.getInstance().initAlipayClient(alipayConfig);
-       // AlipayClient alipayClient = new DefaultAlipayClient(alipayConfig.gatewayUrl, alipayConfig.app_id, alipayConfig.merchant_private_key, "json", alipayConfig.charset, alipayConfig.alipay_public_key, alipayConfig.sign_type);
+       // AlipayClient alipayClient = AliPayClientUtils.getInstance().initAlipayClient(alipayConfig);
+        log.info("支付初始化config:" + JSON.toJSONString(alipayConfig));
+        AlipayClient alipayClient = new DefaultAlipayClient(alipayConfig.gatewayUrl, alipayConfig.app_id, alipayConfig.merchant_private_key, "json", alipayConfig.charset, alipayConfig.alipay_public_key, alipayConfig.sign_type);
         //设置请求参数
         AlipayTradePagePayRequest aliPayRequest = new AlipayTradePagePayRequest();
         aliPayRequest.setReturnUrl(alipayConfig.return_url); //支付宝回调地址
