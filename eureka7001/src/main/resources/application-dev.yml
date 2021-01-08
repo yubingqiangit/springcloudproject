@@ -10,10 +10,10 @@ spring:
 #      password: admin       # 配置登录的密码是admin
 
 server:
-  port: 7002
+  port: 7001
 eureka:
   instance:
-    hostname: eureka7002.com #eureka服务端的实例名
+    hostname: eureka7001.com #eureka服务端的实例名
   client:
     #false表示不像客户中心注册自己
     register-with-eureka: false
@@ -21,9 +21,8 @@ eureka:
     fetch-registry: false
     service-url:
       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
-       defaultZone: http://eureka7001.com:7001/eureka/ #集群版
-#      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/ #集群版-用户认证
-
+      defaultZone: http://eureka7002.com:7002/eureka/ #集群版
+#      defaultZone: http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
       #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/  #单机版
     #server:

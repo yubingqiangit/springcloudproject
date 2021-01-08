@@ -1,4 +1,7 @@
+
 spring:
+  profiles:
+    active: @env@
 #  security:
 #    basic:
 #      enabled: true               # 开启基于HTTP basic的认证
@@ -18,8 +21,8 @@ eureka:
     fetch-registry: false
     service-url:
       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
-      defaultZone: http://eureka7002.com:7002/eureka/ #集群版
-#      defaultZone: http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
+      defaultZone: http://eureka700212.com:7002/eureka/ #集群版
+      #      defaultZone: http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
       #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/  #单机版
     #server:

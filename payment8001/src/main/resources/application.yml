@@ -1,6 +1,8 @@
-server:
-  port: 8001 #服务端口
+
+
 spring:
+  profiles:
+    active: @env@
   cloud:
     stream:
       bindings:
@@ -69,6 +71,8 @@ eureka:
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
 
+server:
+  port: 8001 #服务端口
 
 #showSql
 logging:

@@ -67,7 +67,7 @@ spring:
     name: cloud-order-service #服务名
   datasource:  #数据库
     url: jdbc:mysql://172.17.0.2:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8 #docker配置指定ip
-#    url: jdbc:mysql://localhost:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8
+    #    url: jdbc:mysql://localhost:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver

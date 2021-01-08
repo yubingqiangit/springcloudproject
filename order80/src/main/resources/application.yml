@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: @env@
   thymeleaf:
     prefix: classpath:/templates/
     check-template-location: true

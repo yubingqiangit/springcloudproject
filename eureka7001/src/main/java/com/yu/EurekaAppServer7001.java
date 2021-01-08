@@ -3,6 +3,7 @@ package com.yu;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 /**
@@ -14,6 +15,11 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SpringBootApplication
 @EnableEurekaServer
 public class EurekaAppServer7001 {
+
+    @RequestMapping("/")
+    public String demo() {
+        return "第一次使用 docker 部署 springboot ";
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(EurekaAppServer7001.class, args);

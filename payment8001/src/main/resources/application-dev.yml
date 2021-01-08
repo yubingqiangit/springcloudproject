@@ -2,30 +2,34 @@
 spring:
   profiles:
     active: @env@
-  thymeleaf:
-    prefix: classpath:/templates/
-    check-template-location: true
-    suffix: .html
-    encoding: UTF-8
-    servlet:
-      content-type: text/html
-    mode: HTML5
-    cache: false
-  cloud:    ##mq消息生产者配置
+  cloud:
+    config:
+      name: cloud-config-client-dev
+      uri: http://localhost:3301
+      label: main
+      profile: dev
     stream:
       bindings:
-        log_format_output:
-          destination: kite.log.format.messages
-          binder: local_rabbit
-          group: logFormat-group1
-        log_output:
+        log_input:            #接收消息
           destination: kite.log.messages
           binder: local_rabbit
           group: logConsumer-group1
-        model_output:
-          destination: log.model.messages
+        #        model_input:            #接收消息
+        #          destination: log.model.messages
+        #          binder: local_rabbit
+        #          group: modelConsumer-group1
+        #        log_output:          #推送消息
+        #          destination: kite.log.messages
+        #          binder: local_rabbit
+        #          group: logConsumer-group1
+        log_format_input:
+          destination: kite.log.format.messages
           binder: local_rabbit
-          group: modelConsumer-group1
+          group: logFormat-group1
+      #        log_format_output:
+      #          destination: kite.log.format.messages
+      #          binder: local_rabbit
+      #          group: logFormat-group1
       binders:
         local_rabbit:
           type: rabbit
@@ -36,94 +40,43 @@ spring:
                 port: 5672
                 username: admin
                 password: admin
-  #  cloud:
-  #    stream:
-  #      bindings:
-  #        input:
-  #          destination: default.messages
-  #          binder: local_rabbit
-  #        output:
-  #          destination: default.messages
-  #          binder: local_rabbit
-  #      binders:
-  #        local_rabbit:
-  #          type: rabbit
-  #          environment:
-  #            spring:
-  #              rabbitmq:
-  #                host: localhost
-  #                port: 5672
-  #                username: admin
-  #                password: admin
-  main:
-    allow-bean-definition-overriding: true
-  #    security:
+  #  security:
   #    basic:
   #      enabled: true               # 开启基于HTTP basic的认证
   #    user:
   #      name: admin                  # 配置登录的账号是admin
-  #      password: admin       # 配置登录的密码是admin
+  #      password: admin             # 配置登录的密码是admin
   application:
-    name: cloud-order-service #服务名
+    name: cloud-payment-service #服务名
   datasource:  #数据库
-    url: jdbc:mysql://172.17.0.2:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8 #docker配置指定ip
-#    url: jdbc:mysql://localhost:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-#  thymeleaf:
-#    cache: true
-#    encoding: UTF-8
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    mode: HTML5
-
-lock:
-  key: redis_key
-
-server:
-  port: 8003
-
 eureka:
   client:
+    #表示是否将自己注册进EurekaServer默认为true
+    register-with-eureka: true
+    #是否从EurekaServer抓取已有的注册信息，默认为true，单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
+    fetch-registry: true
     service-url:
-      defaultZone:  http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
-#      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
-
-### 针对单个服务的 Ribbon 配置
-
-### 针对单个服务的 Ribbon 配置
-CLOUD-PAYMENT-SERVICE:  #服务提供名称
-  ribbon:
-    # 基于配置文件形式的 针对单个服务的 Ribbon 负载均衡策略
-    NFLoadBalancerRuleClassName: com.lb.LoadBalancerConfig  #自定义负载均衡策略
-
-feign:
-  hystrix:
-    command:
-      default:
-        execution:
-          isolation:
-            thread:
-              timeoutInMilliseconds: 6000 #默认的连接超时时间1秒,若1秒没有返回数据,自动的触发降级逻辑
-        circuitBreaker:
-          enabled: true
-          requestVolumeThreshold: 5
-          errorThresholdPercentage: 10
-          sleepWindowInMilliseconds: 10000
-
-#  在被监控的服务上添加暴露点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: hystrix.stream
-#       include: '*'   #'*'代表开放所有端点。
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
+      #      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
+      #defaultZone: http://eureka7001.com:7001/eureka  #单机版
+    #instance:
+    # instance-id: payment8001
+    #prefer-ip-address: true  #点进去左下角会显示ip
+    #Eureka 客户端像服务端发送心跳的时间间隔，单位为秒（默认是30秒）
+    #lease-renewal-interval-in-seconds: 1
+    #Eureka 服务端收到最后一次心跳后等待时间上线，单位为秒（默认是90秒），超时将剔除服务
+    #lease-expiration-duration-in-seconds: 2
 
 #mybatis配置
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
 
+server:
+  port: 8001 #服务端口
 
 #showSql
 logging:
@@ -131,12 +84,11 @@ logging:
     com:
       yu:
         dao : debug
-
-
-
-#第三方http接口地址
-api:
-  url: https://api.apiopen.top
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 app_id: 2021000116682104
 alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1ri3uNj3HiQ+rUxhHRJknuSx0FrkSFLkHXqyT5MmlGpIiZ4dVRfNRkp7f27ptmgzy6xBs0jKRPh381Oa4ydqjaDIeSZ+jxWCKsyYRZh3+cPzL91pb/XjCA3khIU6Vgp3IEKRMGq9VsONvqehu1BZeA5INW56Lh4bd8tV/pfPvy+w8MIniRbdsRleFKOSE6AdvljecJH5wzFT4GtsLRsaPG1QgWhJ7d1MnbiZzGSJNyVaGoCa175JC1c72mkdHp0s2/ClEAzlJfcwU78UC9pvBKL3763sNT6hDAibYlWwYjAcGJ0teKc6uaJmG53b7t8QbFQKq0EXQaD//FK8jjXIQIDAQAB
