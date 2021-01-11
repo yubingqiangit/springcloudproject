@@ -64,7 +64,7 @@ spring:
   #      name: admin                  # 配置登录的账号是admin
   #      password: admin       # 配置登录的密码是admin
   application:
-    name: cloud-order-service #服务名
+    name: call-back-service #服务名
   datasource:  #数据库
     url: jdbc:mysql://172.17.0.2:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8 #docker配置指定ip
     #    url: jdbc:mysql://localhost:3306/dockermysql?useUnicode=true&characterEncoding=UTF-8
