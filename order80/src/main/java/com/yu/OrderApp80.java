@@ -15,6 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * TODO 
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Bean;
  * @author yubingqian
  * @date 2020/9/22 16:14 
  */
+@EnableAsync  //开启异步
 @EnableHystrix
 @SpringBootApplication
 @EnableEurekaClient

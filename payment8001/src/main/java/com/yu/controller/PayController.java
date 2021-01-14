@@ -40,6 +40,7 @@ import com.yu.utils.OrderNoRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -73,6 +74,9 @@ public class PayController {
 
     @Autowired
     private AlipayConfig alipayConfig;
+
+    @Value("${qrcode_path}")
+    public String qrcode_path;
 
     /**
      * post请求
@@ -224,12 +228,12 @@ public class PayController {
         //生成二维码
         try {
             Date date = new Date();
-            String s = date.getTime()+"";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            String format = simpleDateFormat.format(date);
             BitMatrix bitMatrix=new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE,width,height,hints);
-            Path file=new File("/home/"+s+".png").toPath();//将指定的二维码图片生成在指定的路径(docker 路径)
-            //Path file=new File("D:/appQrCode/"+s+".png").toPath();//将指定的二维码图片生成在指定的路径（本机路径)
+            Path file=new File(qrcode_path + format +".png").toPath();//将指定的二维码图片生成在指定的路径
             MatrixToImageWriter.writeToPath(bitMatrix,formt,file);
-            System.out.println("二维码图片生成成功");
+            System.out.println("生成成功");
             int pay = modelMapper.createPay(payReqItem);
             logger.info("创建支付预下单成功....");
         } catch (Exception e) {
@@ -253,7 +257,12 @@ public class PayController {
         return rannum + str;
     }
 
-
+    public static void main(String[] args) {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String format = simpleDateFormat.format(date);
+        System.out.println(format);
+    }
 
 
 }

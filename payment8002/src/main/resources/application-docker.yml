@@ -96,3 +96,6 @@ return_url: http://zfb.vaiwan.com/alipay/show
 gatewayUrl: https://openapi.alipaydev.com/gateway.do
 sign_type: RSA2
 charset: UTF-8
+
+
+qrcode_path: /home/
