@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
  * @author yubingqian
  * @date 2020/9/25 15:27 
  */
-@Repository
+/*@Repository
 public interface ModelMapper {
 
-    /**
+    *//**
      * 创建支付预下单
      * @param payReqItem
-     */
+     *//*
     int updatePay(PayReqItem payReqItem);
 
-}
+}*/

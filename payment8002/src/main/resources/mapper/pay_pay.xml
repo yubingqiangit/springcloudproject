@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace= "com.yu.mybatis.mapper.PayPayMapper" >
+    <resultMap id ="payMap" type="com.yu.mybatis.entity.PayPay">
+        <result property="id" column="id"/>
+        <result column="amount" property="amount"/>
+        <result column="orderNo" property="orderNo"/>
+        <result column="state" property="state"/>
+        <result column="common" property="common"/>
+    </resultMap>
+
+   <!-- &lt;!&ndash;更新支付单状态&ndash;&gt;
+    <insert id="updatePay" parameterType="com.yu.model.PayReqItem">
+        update pay_pay set state = 20,common = 20 where orderNo = #{orderNo}
+    </insert>-->
+
+</mapper>

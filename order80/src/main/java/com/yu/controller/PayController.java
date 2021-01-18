@@ -12,7 +12,6 @@ import com.yu.common.CommonResult;
 import com.yu.config.AlipayConfig;
 import com.yu.config.SyncConfig;
 import com.yu.config.sync.Sync;
-import com.yu.dao.ModelMapper;
 import com.yu.feign.FeignService;
 import com.yu.model.ModelStakeRel;
 import com.yu.model.PayReqItem;

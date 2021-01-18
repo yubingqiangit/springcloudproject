@@ -1,5 +1,6 @@
 package com.yu;
 
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.lb.LoadBalancerConfig;
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import com.yu.rebbitmqConfig.MyProcessor;
@@ -31,7 +32,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableHystrixDashboard
 //@EnableBinding(value = {Processor.class})    //启用 stream
 @EnableBinding(value = {MyProcessor.class})
-@MapperScan("com.yu.dao")
+@MapperScan("com.yu.mybatis.mapper")
 public class OrderApp80 {
     public static void main(String[] args) {
         SpringApplication.run(OrderApp80.class, args);
@@ -45,5 +46,14 @@ public class OrderApp80 {
         registrationBean.addUrlMappings("/hystrix.stream");
         registrationBean.setName("HystrixMetricsStreamServlet");
         return registrationBean;
+    }
+
+    /**
+     * 分页
+     * @return
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
     }
 }

@@ -1,3 +1,4 @@
+/*
 package com.yu.dao;
 
 
@@ -7,12 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+*/
 /**
  * TODO 
  * @version 1.0
  * @author yubingqian
  * @date 2020/9/25 15:27 
- */
+ *//*
+
 @Repository
 public interface ModelMapper {
 
@@ -24,10 +27,13 @@ public interface ModelMapper {
     //@Select("SELECT * FROM pc_model_stake_rel")
     List<ModelStakeRel> getModelPostList(ModelStakeRel modelStakeRel);
 
-    /**
+    */
+/**
      * 创建支付预下单
      * @param payReqItem
-     */
+     *//*
+
     int createPay(PayReqItem payReqItem);
 
 }
+*/

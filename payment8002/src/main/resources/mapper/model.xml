@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace= "com.yu.dao.ModelMapper" >
-    <resultMap id ="ModelStakeRelMap" type="com.yu.entity.ModelStakeRel">
+<mapper namespace= "com.yu.mybatis.mapper.ModelStakeRelMapper" >
+    <resultMap id ="ModelStakeRelMap" type="com.yu.mybatis.entity.ModelStakeRel">
         <result property="id" column="id"/>
         <result column="model_id" property="modelId"/>
         <result column="stake_no" property="stakeNo"/>
@@ -10,15 +10,15 @@
         <result column="rel_time" property="relTime"/>
         <result column="server_type" property="serverType"/>
     </resultMap>
-    <resultMap id ="payMap" type="com.yu.vo.PayPay">
+   <!-- <resultMap id ="payMap" type="com.yu.vo.PayPay">
         <result property="id" column="id"/>
         <result column="amount" property="amount"/>
         <result column="orderNo" property="orderNo"/>
         <result column="state" property="state"/>
         <result column="common" property="common"/>
-    </resultMap>
+    </resultMap>-->
 
-    <insert id="createPay" parameterType="com.yu.model.PayReqItem">
+    <!--<insert id="createPay" parameterType="com.yu.model.PayReqItem">
         insert into pay_pay (amount,orderNo,state,common) values(#{amount}, #{orderNo},15,15)
     </insert>
 
@@ -36,6 +36,5 @@
        id > #{id}
        and
        charge_port > #{chargePort}
-    </select>
-
+    </select>-->
 </mapper>

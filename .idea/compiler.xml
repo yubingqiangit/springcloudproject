@@ -19,6 +19,7 @@
         <module name="eureka7001" />
         <module name="eureka7002" />
         <module name="hystrix-dashboard" />
+        <module name="mybatis-plus" />
         <module name="order80" />
         <module name="payment8001" />
         <module name="payment8002" />

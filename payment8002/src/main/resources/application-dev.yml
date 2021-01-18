@@ -1,26 +1,27 @@
 
+
 spring:
   profiles:
     active: @env@
   cloud:
     stream:
       bindings:
+        log_input:            #接收消息
+          destination: kite.log.messages
+          binder: local_rabbit
+          group: logConsumer-group1
         #        model_input:            #接收消息
         #          destination: log.model.messages
         #          binder: local_rabbit
         #          group: modelConsumer-group1
-        log_input:
-          destination: kite.log.messages
+        #        log_output:          #推送消息
+        #          destination: kite.log.messages
+        #          binder: local_rabbit
+        #          group: logConsumer-group1
+        log_format_input:
+          destination: kite.log.format.messages
           binder: local_rabbit
-          group: logConsumer-group1
-      #        log_output:
-      #          destination: kite.log.messages
-      #          binder: local_rabbit
-      #          group: logConsumer-group1
-      #        log_format_input:
-      #          destination: kite.log.format.messages
-      #          binder: local_rabbit
-      #          group: logFormat-group1
+          group: logFormat-group1
       #        log_format_output:
       #          destination: kite.log.format.messages
       #          binder: local_rabbit
@@ -40,7 +41,7 @@ spring:
   #      enabled: true               # 开启基于HTTP basic的认证
   #    user:
   #      name: admin                  # 配置登录的账号是admin
-  #      password: admin       # 配置登录的密码是admin
+  #      password: admin             # 配置登录的密码是admin
   application:
     name: cloud-payment-service #服务名
   datasource:  #数据库
@@ -59,7 +60,7 @@ eureka:
       #      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
       #defaultZone: http://eureka7001.com:7001/eureka  #单机版
     #instance:
-    #instance-id: payment8002
+    # instance-id: payment8002
     #prefer-ip-address: true  #点进去左下角会显示ip
     #Eureka 客户端像服务端发送心跳的时间间隔，单位为秒（默认是30秒）
     #lease-renewal-interval-in-seconds: 1
@@ -67,9 +68,23 @@ eureka:
     #lease-expiration-duration-in-seconds: 2
 
 #mybatis配置
-#mybatis配置
-mybatis:
-  mapper-locations: classpath*:mapper/*.xml
+#mybatis:
+#  mapper-locations: classpath*:mapper/*.xml
+
+mybatis-plus:
+  # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:/mapper/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.yu.mybatis.entity
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 2
+    # 热加载mapper文件
+    refresh: true
+    db-config:
+      db-type: mysql
 
 server:
   port: 8002 #服务端口
@@ -77,10 +92,11 @@ server:
 #showSql
 logging:
   level:
-    com:
-      yu:
-        dao : debug
-
+    root: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+    com.yu.mybatis: DEBUG
 
 app_id: 2021000116682104
 alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1ri3uNj3HiQ+rUxhHRJknuSx0FrkSFLkHXqyT5MmlGpIiZ4dVRfNRkp7f27ptmgzy6xBs0jKRPh381Oa4ydqjaDIeSZ+jxWCKsyYRZh3+cPzL91pb/XjCA3khIU6Vgp3IEKRMGq9VsONvqehu1BZeA5INW56Lh4bd8tV/pfPvy+w8MIniRbdsRleFKOSE6AdvljecJH5wzFT4GtsLRsaPG1QgWhJ7d1MnbiZzGSJNyVaGoCa175JC1c72mkdHp0s2/ClEAzlJfcwU78UC9pvBKL3763sNT6hDAibYlWwYjAcGJ0teKc6uaJmG53b7t8QbFQKq0EXQaD//FK8jjXIQIDAQAB
@@ -90,6 +106,5 @@ return_url: http://zfb.vaiwan.com/alipay/show
 gatewayUrl: https://openapi.alipaydev.com/gateway.do
 sign_type: RSA2
 charset: UTF-8
-
 
 qrcode_path: D:/appQrCode/

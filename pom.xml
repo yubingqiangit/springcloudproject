@@ -24,6 +24,7 @@
       <module>cloud-config-client</module>
       <module>thyeleaf-web</module>
       <module>call-back</module>
+      <module>mybatis-plus</module>
   </modules>
 
     <profiles>

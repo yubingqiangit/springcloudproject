@@ -28,12 +28,12 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.yu.common.CommonResult;
 import com.yu.config.AlipayConfig;
-import com.yu.dao.ModelMapper;
-import com.yu.entity.ModelStakeRel;
 import com.yu.exception.CommonException;
 import com.yu.exception.ExceptionEnums;
 import com.yu.model.PayReqItem;
 import com.yu.model.PayRespItem;
+import com.yu.mybatis.entity.PayPay;
+import com.yu.mybatis.service.PayPayService;
 import com.yu.service.AlipayService;
 import com.yu.utils.AliPayClientUtils;
 import com.yu.utils.OrderNoRandom;
@@ -64,13 +64,16 @@ import java.util.Random;
 @RestController
 @RequestMapping("/payment")
 public class PayController {
-    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PayController.class);
 
     @Autowired
     AlipayService alipayService;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private PayPayService payPayService;
+
+    /*@Autowired
+    private ModelMapper modelMapper;*/
 
     @Autowired
     private AlipayConfig alipayConfig;
@@ -91,8 +94,14 @@ public class PayController {
             String result = alipayService.aliPay(payReqItem);
             logger.info("支付宝返回form标签:{}",result);
             //创建支付预下单
-            int pay = modelMapper.createPay(payReqItem);
-            logger.info("创建支付预下单成功....");
+            PayPay payPay = new PayPay();
+            payPay.setState(15);
+            payPay.setCommon("15");
+            payPay.setAmount(payReqItem.getAmount());
+            payPay.setOrderNo(payReqItem.getOrderNo());
+            boolean insert = payPayService.insert(payPay);
+           // int pay = modelMapper.createPay(payReqItem);
+            logger.info("创建支付预下单成功...." + insert);
 
             PayRespItem payRespItem = new PayRespItem();
             payRespItem.setOrderNo(payReqItem.getOrderNo());
@@ -175,8 +184,16 @@ public class PayController {
             //这里和普通的接口调用不同，使用的是sdkExecute
             AlipayTradeAppPayResponse aliresponse = alipayClient.sdkExecute(alirequest);
             System.out.println("签名串："+aliresponse.getBody());//就是orderString 可以直接给客户端请求，无需再做处理。
-            int pay = modelMapper.createPay(payReqItem);
-            logger.info("创建支付预下单成功....");
+            //int pay = modelMapper.createPay(payReqItem);
+            //创建支付预下单
+            PayPay payPay = new PayPay();
+            payPay.setState(15);
+            payPay.setCommon("15");
+            payPay.setAmount(payReqItem.getAmount());
+            payPay.setOrderNo(payReqItem.getOrderNo());
+            boolean insert = payPayService.insert(payPay);
+            // int pay = modelMapper.createPay(payReqItem);
+            logger.info("创建支付预下单成功...." + insert);
             return new CommonResult<>(aliresponse.getBody());
         } catch (AlipayApiException e) {
             e.printStackTrace();
@@ -234,8 +251,15 @@ public class PayController {
             Path file=new File(qrcode_path + format +".png").toPath();//将指定的二维码图片生成在指定的路径
             MatrixToImageWriter.writeToPath(bitMatrix,formt,file);
             System.out.println("生成成功");
-            int pay = modelMapper.createPay(payReqItem);
-            logger.info("创建支付预下单成功....");
+            //创建支付预下单
+            PayPay payPay = new PayPay();
+            payPay.setState(15);
+            payPay.setCommon("15");
+            payPay.setAmount(payReqItem.getAmount());
+            payPay.setOrderNo(payReqItem.getOrderNo());
+            boolean insert = payPayService.insert(payPay);
+            // int pay = modelMapper.createPay(payReqItem);
+            logger.info("创建支付预下单成功...." + insert);
         } catch (Exception e) {
             logger.info("二维码图片生成失败::" + e.getMessage());
         }

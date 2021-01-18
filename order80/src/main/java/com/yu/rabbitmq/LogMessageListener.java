@@ -1,7 +1,9 @@
 package com.yu.rabbitmq;
 
-import com.yu.dao.ModelMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yu.model.PayReqItem;
+import com.yu.mybatis.entity.PayPay;
+import com.yu.mybatis.service.PayPayService;
 import com.yu.rebbitmqConfig.MyProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,7 @@ public class LogMessageListener {
     Logger logger = LoggerFactory.getLogger(LogMessageListener.class);
 
     @Autowired
-    ModelMapper modelMapper;
+    PayPayService payPayService;
 
     /**
      * 通过 MyProcessor.MODEL_MESSAGE_INPUT 接收消息
@@ -32,9 +34,12 @@ public class LogMessageListener {
     public void processModelMessage(String message) {
         logger.info("接收到支付中心异步支付结果MQ通知：" + message);
         //更新订单状态
-        PayReqItem payReqItem = new PayReqItem();
-        payReqItem.setOrderNo(message);
-        int i = modelMapper.updatePay(payReqItem);
-        logger.info("更新支付单状态成功......");
+        PayPay payPay = new PayPay();
+        payPay.setState(20);
+        payPay.setCommon("20");
+        QueryWrapper<PayPay> wrapper = new QueryWrapper<PayPay>();
+        wrapper.eq("orderNo", message);
+        boolean update = payPayService.update(payPay, wrapper);
+        logger.info("更新支付单状态成功......" + update);
     }
 }

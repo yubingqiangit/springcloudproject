@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.yu.common.CommonResult;
 import com.yu.commonApi.FeignCommonService;
 import com.yu.model.ModelStakeRel;
-import com.yu.service.ModelService;
+import com.yu.mybatis.service.ModelStakeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -23,13 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonFeignController implements FeignCommonService {
     private static final Logger logger = LoggerFactory.getLogger(CommonFeignController.class);
     @Autowired
-    private ModelService modelService;
+    private ModelStakeService modelStakeService;
 
     @Override
     @RequestMapping(value = "/common/model/{id}")
     public CommonResult<ModelStakeRel> commonResult(@PathVariable("id") Integer id) {
         System.out.println("request para id = " + id);
-        com.yu.entity.ModelStakeRel model = modelService.getModelStakeRelById(id);
+        //com.yu.entity.ModelStakeRel model = modelService.getModelStakeRelById(id);
+        com.yu.mybatis.entity.ModelStakeRel target = modelStakeService.selectById(id);
+        com.yu.entity.ModelStakeRel model = new com.yu.entity.ModelStakeRel();
+        BeanUtils.copyProperties(target,model);
         logger.info("ModelStake查询结果::" + JSON.toJSONString(model));
         if (model == null) {
             return new CommonResult<ModelStakeRel>(444, String.format("server port::[<%s>]model is not found error.",8001));
