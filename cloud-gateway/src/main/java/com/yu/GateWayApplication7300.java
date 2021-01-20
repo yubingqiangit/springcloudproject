@@ -3,6 +3,9 @@ package com.yu;
 import com.yu.config.HostAddKeyResolver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
@@ -13,7 +16,7 @@ import org.springframework.context.annotation.Bean;
  * @date 2020/9/27 17:52 
  */
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) //排除mysql和redis自动化配置
 public class GateWayApplication7300 {
 
 
