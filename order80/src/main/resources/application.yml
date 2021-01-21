@@ -48,12 +48,12 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-#    security:
-#    basic:
-#      enabled: true               # 开启基于HTTP basic的认证
-#    user:
-#      name: admin                  # 配置登录的账号是admin
-#      password: admin       # 配置登录的密码是admin
+  #    security:
+  #    basic:
+  #      enabled: true               # 开启基于HTTP basic的认证
+  #    user:
+  #      name: admin                  # 配置登录的账号是admin
+  #      password: admin       # 配置登录的密码是admin
   application:
     name: cloud-order-service #服务名
   datasource:  #数据库
@@ -62,6 +62,13 @@ spring:
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
 
+#  thymeleaf:
+#    cache: true
+#    encoding: UTF-8
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    mode: HTML5
+
 lock:
   key: redis_key
 
@@ -69,7 +76,22 @@ server:
   port: 80
 
 eureka:
+  instance:
+    instance-id: order80
+    prefer-ip-address: true
+    #实例续约间隔时间(默认30秒)
+    lease-renewal-interval-in-seconds: 5
+    #实例超时时间，表示*秒后没有续约，Server就认为他不可用了，随之就会将其剔除。
+    lease-expiration-duration-in-seconds: 15
+    status-page-url-path: management/info
+    health-check-url-path: management/health
   client:
+    #指示此实例是否应将其信息注册到eureka服务器以供其他服务发现，默认为false
+    register-with-eureka: true
+    #是否从Server获取注册信息
+    fetch-registry: true
+    #定时从Eureka Server拉取服务注册信息的间隔时间(默认30秒，单位：s/秒）
+    registry-fetch-interval-seconds: 5
     service-url:
       defaultZone:  http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
 #      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
@@ -86,7 +108,7 @@ CLOUD-PAYMENT-SERVICE:  #服务提供名称
 feign:
   hystrix:
     # feign熔断器开关
-    enabled: true
+    enabled: false
 
 hystrix:
   command:
@@ -115,8 +137,8 @@ management:
 #mybatis配置
 #mybatis:
 #  mapper-locations: classpath*:mapper/*.xml
-
 # mybatis-plus 配置
+
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
   # 如果是放在resource目录 classpath:/mapper/*Mapper.xml

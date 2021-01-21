@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
  * @date 2020/9/27 17:52 
  */
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) //排除mysql和redis自动化配置
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) //排除mysql自动化配置
 public class GateWayApplication7300 {
 
 
@@ -25,7 +25,7 @@ public class GateWayApplication7300 {
     }
 
 
-   /* @Bean(name = HostAddKeyResolver.BEAN_NAME)
+    /*@Bean(name = HostAddKeyResolver.BEAN_NAME)
     public HostAddKeyResolver hostAddKeyResolver() {
         return new HostAddKeyResolver();
     }*/

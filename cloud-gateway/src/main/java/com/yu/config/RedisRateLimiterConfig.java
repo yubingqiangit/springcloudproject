@@ -15,20 +15,13 @@ import reactor.core.publisher.Mono;
 public class RedisRateLimiterConfig {
 
     /**
-     * 根据路径去限流
-     * @return
-     */
-  /*  @Bean
-    public KeyResolver userKeyResolver() {
-        return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("username"));
-    }*/
-
-    /**
      * 根据ip限流
      * @return
      */
     @Bean
     public KeyResolver ipKeyResolver() {
-        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
+        System.out.println("=====================ipKeyResolver=====================");
+        return exchange -> Mono.just(
+                exchange.getRequest().getRemoteAddress().getHostName());
     }
 }

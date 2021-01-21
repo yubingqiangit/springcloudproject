@@ -65,11 +65,25 @@ spring:
 
 eureka:
   client:
+    #指示此实例是否应将其信息注册到eureka服务器以供其他服务发现，默认为false
+    register-with-eureka: true
+    #是否从Server获取注册信息
+    fetch-registry: true
+    #定时从Eureka Server拉取服务注册信息的间隔时间(默认30秒，单位：s/秒）
+    registry-fetch-interval-seconds: 5
     service-url:
-      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
+      defaultZone:  http://172.17.0.5:7001/eureka,http://172.17.0.6:7002/eureka #集群版
+#      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
 #      defaultZone: http://admin:admin@eureka7001.com:7001/eureka/,http://admin:admin@eureka7002.com:7002/eureka/ #集群版-用户认证
   instance:
+    instance-id: gateway7300
     prefer-ip-address: true
+    #实例续约间隔时间(默认30秒)
+    lease-renewal-interval-in-seconds: 5
+    #实例超时时间，表示*秒后没有续约，Server就认为他不可用了，随之就会将其剔除。
+    lease-expiration-duration-in-seconds: 15
+    status-page-url-path: management/info
+    health-check-url-path: management/health
 
 
 app_id: 2021000116682104
