@@ -12,6 +12,10 @@
     <artifactId>consul-order8080</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!--springcloud consul-server-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
