@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * 消费监听者配置
+ * 消费监听者配置做消息转发
  * @version 1.0
  * @author yubingqian
  * @date 2021/1/22 9:20 
@@ -39,10 +39,7 @@ public class MQConsumeMsgListenerProcessor implements MessageListenerConcurrentl
         String[] path = rocket_mq_consumer_path.split(";");
         for (String s : path) {
             Object o = Class.forName(s).newInstance();
-            System.out.println("o==========" + o);
             if (o instanceof PassMessage) {
-                PassMessage o1 = (PassMessage) o;
-                System.out.println("o1===========" + JSON.toJSONString(o1));
                 observerMQ.addPassMassage((PassMessage) o);
             }
         }
