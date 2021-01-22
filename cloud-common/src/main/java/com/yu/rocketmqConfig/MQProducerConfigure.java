@@ -1,4 +1,4 @@
-package com.yu.config.rocketmqConfig;
+package com.yu.rocketmqConfig;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ public class MQProducerConfigure {
      */
     @Bean
     public DefaultMQProducer defaultProducer() throws MQClientException {
-        log.info("------------------------defaultProducer begin init---------------------------------------");
+        log.info("------------------------[defaultProducer begin init]---------------------------------------");
         DefaultMQProducer producer = new DefaultMQProducer("cloud-order-service");
         producer.setNamesrvAddr(namesrvAddr);
         producer.setVipChannelEnabled(false);
@@ -60,7 +60,7 @@ public class MQProducerConfigure {
         producer.setSendMsgTimeout(sendMsgTimeOut);
         producer.setRetryTimesWhenSendAsyncFailed(retryTimesWhenSendFailed);
         producer.start();
-        log.info("-------------------------defaultProducer init success---------------------------------  ");
+        log.info("-------------------------[defaultProducer init success]---------------------------------  ");
         return producer;
     }
 }

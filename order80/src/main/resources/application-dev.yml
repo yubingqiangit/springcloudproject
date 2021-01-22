@@ -28,7 +28,7 @@ spring:
       groupName: ${spring.application.name}
       isOnOff: 'on'
       namesrvAddr: 127.0.0.1:9876
-      topics: MyTopic~TestTag;*~*
+      topics: MyTopic~TestTag;OrderTopic~OrderTag
   cloud:    ##mq消息生产者配置
     stream:
       bindings:
@@ -196,3 +196,6 @@ return_url: http://zfb.vaiwan.com/alipay/show
 gatewayUrl: https://openapi.alipaydev.com/gateway.do
 sign_type: RSA2
 charset: UTF-8
+
+rocket_mq_consumer_path: com.yu.config.rocketmqConfig.OrderConsumer;com.yu.config.rocketmqConfig.OtherConsumer
+

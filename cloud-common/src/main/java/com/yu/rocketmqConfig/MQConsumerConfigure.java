@@ -1,4 +1,4 @@
-package com.yu.config.rocketmqConfig;
+package com.yu.rocketmqConfig;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +59,7 @@ public class MQConsumerConfigure {
      */
     @Bean
     public DefaultMQPushConsumer defaultConsumer() throws MQClientException {
-        log.info("--------------------------Consumer begin init------------------------------");
+        log.info("--------------------------[Consumer begin init]------------------------------");
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(groupName);
         consumer.setNamesrvAddr(namesrvAddr);
         consumer.setConsumeThreadMin(consumeThreadMin);
@@ -85,7 +85,7 @@ public class MQConsumerConfigure {
                 consumer.subscribe(tagArr[0], tagArr[1]);
             }
             consumer.start();
-            log.info("--------------------------Consumer init Success------------------------------");
+            log.info("--------------------------[Consumer init Success]------------------------------");
         } catch (MQClientException e) {
             log.error("consumer init error.",e);
         }
