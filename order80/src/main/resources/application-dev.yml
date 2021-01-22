@@ -10,6 +10,25 @@ spring:
       content-type: text/html
     mode: HTML5
     cache: false
+  #整合RocketMq配置
+  rocketmq:
+    #生产者
+    producer:
+      groupName: ${spring.application.name}
+      isOnOff: 'on'
+      maxMessageSize: 4096
+      namesrvAddr: 127.0.0.1:9876
+      retryTimesWhenSendFailed: 2
+      sendMsgTimeOut: 3000
+    #消费者
+    consumer:
+      consumeMessageBatchMaxSize: 1
+      consumeThreadMax: 32
+      consumeThreadMin: 5
+      groupName: ${spring.application.name}
+      isOnOff: 'on'
+      namesrvAddr: 127.0.0.1:9876
+      topics: MyTopic~TestTag;*~*
   cloud:    ##mq消息生产者配置
     stream:
       bindings:
