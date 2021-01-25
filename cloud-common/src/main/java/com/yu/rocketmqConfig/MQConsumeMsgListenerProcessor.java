@@ -34,8 +34,8 @@ public class MQConsumeMsgListenerProcessor implements MessageListenerConcurrentl
     @SneakyThrows
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgList, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-        log.info("监听器获取消费者配置类：" + rocket_mq_consumer_path);
         //使用观察者模式做消息广播转发
+        log.info("监听器获取观察者：" + rocket_mq_consumer_path);
         ObserverMQ observerMQ = new ObserverMQ();
         String[] path = rocket_mq_consumer_path.split(";");
         for (String s : path) {
@@ -45,7 +45,7 @@ public class MQConsumeMsgListenerProcessor implements MessageListenerConcurrentl
             }
         }
         String s =observerMQ.passMessage(msgList, consumeConcurrentlyContext);
-        System.out.println("监听器转发消息成功....");
+        log.info("监听器转发消息成功....");
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     }
 }
