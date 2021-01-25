@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 观察者转发
+ * 观察者主题
  * @version 1.0
  * @author yubingqian
  * @date 2021/1/22 11:47 
@@ -34,7 +34,7 @@ public class ObserverMQ {
     }
 
     /**
-     * 转发消息
+     * 通知所有观察者
      * @param msgList
      * @param consumeConcurrentlyContext
      * @return

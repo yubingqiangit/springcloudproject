@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * 消费监听者配置做消息转发
+ * ROCKET-MQ监听器
  * @version 1.0
  * @author yubingqian
  * @date 2021/1/22 9:20 
@@ -35,6 +35,7 @@ public class MQConsumeMsgListenerProcessor implements MessageListenerConcurrentl
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgList, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
         log.info("监听器获取消费者配置类：" + rocket_mq_consumer_path);
+        //使用观察者模式做消息广播转发
         ObserverMQ observerMQ = new ObserverMQ();
         String[] path = rocket_mq_consumer_path.split(";");
         for (String s : path) {
@@ -44,7 +45,7 @@ public class MQConsumeMsgListenerProcessor implements MessageListenerConcurrentl
             }
         }
         String s =observerMQ.passMessage(msgList, consumeConcurrentlyContext);
-        System.out.println("监听器转发成功....");
+        System.out.println("监听器转发消息成功....");
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     }
 }
