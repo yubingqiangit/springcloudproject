@@ -6,6 +6,24 @@ spring:
   application:
     name: consul-provider-peyment
   ###consul注册中心地址
+  rocketmq:
+    #生产者
+    producer:
+      groupName: ${spring.application.name}
+      isOnOff: 'on'
+      maxMessageSize: 4096
+      namesrvAddr: 127.0.0.1:9876
+      retryTimesWhenSendFailed: 2
+      sendMsgTimeOut: 3000
+    #消费者
+    consumer:
+      consumeMessageBatchMaxSize: 1
+      consumeThreadMax: 32
+      consumeThreadMin: 5
+      groupName: ${spring.application.name}
+      isOnOff: 'on'
+      namesrvAddr: 127.0.0.1:9876
+      topics: MyTopic~TestTag;OrderTopic~OrderTag
   cloud:
     consul:
       host: localhost
@@ -22,3 +40,5 @@ return_url: http://zfb.vaiwan.com/alipay/show
 gatewayUrl: https://openapi.alipaydev.com/gateway.do
 sign_type: RSA2
 charset: UTF-8
+
+rocket_mq_consumer_path:
