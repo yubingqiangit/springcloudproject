@@ -25,6 +25,8 @@
       <module>thyeleaf-web</module>
       <module>call-back</module>
       <module>mybatis-plus</module>
+      <module>nacos-order</module>
+      <module>nacos-payment</module>
   </modules>
 
     <profiles>

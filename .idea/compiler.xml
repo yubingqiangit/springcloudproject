@@ -20,6 +20,8 @@
         <module name="eureka7002" />
         <module name="hystrix-dashboard" />
         <module name="mybatis-plus" />
+        <module name="nacos-order" />
+        <module name="nacos-payment" />
         <module name="order80" />
         <module name="payment8001" />
         <module name="payment8002" />
