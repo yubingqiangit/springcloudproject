@@ -2,11 +2,21 @@ spring:
   application:
     name: nacos-discovery-consumer-feign
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        metadata:
-          name: lengleng
+    #edas注册中心
+    alicloud:
+      ans:
+        server-list: 127.0.0.1
+        server-port: 8080
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#        metadata:
+#          name: lengleng
 
 server:
-  port: 8052
+  port: 8053
+logging:
+  path: /home/admin/logs
+  file: biz.log
+  level:
+    root: info
