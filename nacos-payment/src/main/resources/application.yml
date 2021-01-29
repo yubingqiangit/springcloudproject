@@ -5,13 +5,13 @@ spring:
   application:
     name: nacos-discovery-provider
   cloud:
-#    nacos:
-#      discovery:
-#        server-addr: 127.0.0.1:8848
-#        metadata:
-#          name: provider
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        metadata:
+          name: provider
     #edas注册中心
-   alicloud:
-      ans:
-        server-list: 127.0.0.1
-        server-port: 8080
+#   alicloud:
+#      ans:
+#        server-list: 127.0.0.1
+#        server-port: 8080
